@@ -84,34 +84,68 @@
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
                 tools:background="@android:color/holo_blue_dark" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:id="@+id/divider1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
                     android:background="@android:color/darker_gray"
-                    android:layout_weight="0.7"/>
+                    android:gravity="center|center_vertical"/>
+
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:gravity="center|center_vertical"
+
                     android:text="@string/o" />
+
                 <View
+                    android:id="@+id/divider2"
+                    android:layout_weight="0.4"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:background="@android:color/darker_gray" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/register_text_view"
+                style="@android:style/Widget.Material.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/register"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="24sp"
+                android:textStyle="normal|bold" />
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/facebook_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="?attr/colorPrimary"
                 android:text="@string/login_facebook_button"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/google_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/colorError"
+                android:text="@string/login_google_button"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
         </LinearLayout>
