@@ -20,5 +20,10 @@
     <string name="name">Nombre</string>
     <string name="lastName">Apellido</string>
     <string name="doSignup">Registrarse</string>
+    <string name="no_repeat_psswd">La contraseña debe ser igual en ambos campos</string>
+    <string name="name_only_letters">El nombre debe tener solo letras (Pepito-Pepa-Pepa), entre 4 y 10 caracteres</string>
+    <string name="lastname_only_letters">El Apellido debe tener solo letras, entre 4 y 10 caracteres</string>
+    <string name="no_empty">Los campos no pueden estár vacios</string>
+    <string name="phone_matches">Teléfono debe tener 10 dígitos</string>
 
 </resources>

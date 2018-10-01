@@ -23,7 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".ServicesActivity" />
+        <activity android:name=".LocationActivity" />
+        <activity android:name=".DateTimePickerActivity" />
+        <activity android:name=".ScheduleActivity"></activity>
     </application>
 
 </manifest>

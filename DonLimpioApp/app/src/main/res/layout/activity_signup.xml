@@ -60,7 +60,7 @@
             android:hint="@string/prompt_phone"
             android:imeActionId="6"
             android:imeOptions="actionUnspecified"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:maxLines="1"
             android:singleLine="true" />
 
@@ -70,9 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/doSignup"
-            android:textColor="@android:color/background_light"
             android:textStyle="bold"
-            tools:background="@android:color/holo_blue_dark" />
+            android:backgroundTint="@color/greenButtons" />
 
     </LinearLayout>
 </ScrollView>

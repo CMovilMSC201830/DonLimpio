@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DateTimePickerActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleccione Fecha"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.025" />
+
+
+    <EditText
+        android:id="@+id/et_mostrar_fecha_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        android:hint="DD/MM/AAAA"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/et_mostrar_hora_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="time"
+        android:hint="0:00:00"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_mostrar_fecha_picker"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ib_obtener_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_calendar_today_black_18dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/et_mostrar_fecha_picker"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.505"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/ib_obtener_hora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_av_timer_black_18dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_mostrar_fecha_picker"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/et_mostrar_hora_picker"
+        android:layout_marginStart="8dp"
+        app:layout_constraintHorizontal_bias="0.504"
+        tools:ignore="ContentDescription" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_mostrar_hora_picker"
+        android:id="@+id/choose"
+        android:text="Seleccionar"/>
+
+</android.support.constraint.ConstraintLayout>
