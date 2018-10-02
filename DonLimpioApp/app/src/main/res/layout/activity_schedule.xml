@@ -11,19 +11,87 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aquiles, este es el resumen de tu solicitud"
+        android:id="@+id/greetings"
+        android:layout_marginBottom="25dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/greetings"
             android:text="Dirección"
             android:id="@+id/lblDir"/>
         <EditText
             android:id="@+id/entry"
-            android:text="CRA 10"
+            android:text="CRA 10 # 40 - 90"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
             android:layout_below="@+id/lblDir"
             android:focusable="false"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entry"
+        android:text="Fecha"
+        android:id="@+id/entry2"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/lbldate"
+        android:text="13 / Abril / 2018"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/entry2"
+        android:focusable="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lbldate"
+        android:text="Hora"
+        android:id="@+id/lblhour"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/entry3"
+        android:text="3:30 pm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblhour"
+        android:focusable="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entry3"
+        android:text="Fecha"
+        android:id="@+id/lblP"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/entry4"
+        android:text="Brendan Moore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblP"
+        android:focusable="false"/>
+
+    <Button
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/greenButtons"
+        android:text="Agendar"
+        android:layout_below="@id/entry4"
+        android:id="@+id/btnDo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnDo"
+        android:text="Cancelar"
+        android:id="@+id/tvcancel"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"/>
 </RelativeLayout>

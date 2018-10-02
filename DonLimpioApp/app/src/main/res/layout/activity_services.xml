@@ -11,7 +11,15 @@
         android:layout_height="wrap_content">
 
     </ScrollView>
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile"
+        android:scaleType="fitCenter"
+        android:id="@+id/profile"
+        android:background="#fff"/>
     <LinearLayout
+        android:layout_below="@+id/profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
