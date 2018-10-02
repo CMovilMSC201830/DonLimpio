@@ -87,5 +87,6 @@
         android:layout_height="50dp"
         android:layout_below="@id/add"
         android:text="Mis Servicios"
-        android:background="@color/greenButtons"/>
+        android:background="@color/greenButtons"
+        android:id="@+id/own_services"/>
 </RelativeLayout>

@@ -28,7 +28,10 @@
         <activity android:name=".LocationActivity" />
         <activity android:name=".DateTimePickerActivity" />
         <activity android:name=".ScheduleActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".OwnServicesActivity" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".TrackServiceActivity"></activity>
     </application>
 
 </manifest>
