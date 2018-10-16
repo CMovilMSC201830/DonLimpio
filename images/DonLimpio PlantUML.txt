@@ -1,0 +1,98 @@
+/**
+ * @startuml
+ * skinparam packageStyle rectangle
+ * left to right direction
+ * User <|-- Customer
+ * User <|-- Provider
+ * User <|-- Admin
+ * :System:
+ * rectangle DonLimpio_App {
+ * :User: -- (Register User)
+ * :User: -- (Login)
+ * :User: -- (Logout)
+ * :Customer: -- (Search a service)
+ * :Customer: -- (Request a service)
+ * :Customer: -- (Qualify a service)
+ * :Customer: -- (Cancel a service)
+ * :Customer: -- (Service Payment)
+ * :Provider: -- (Cancel a service)
+ * :Provider: -- (Qualify a service)
+ * :Provider: -- (Offer a Service)
+ * :Admin: -- (Admin payments and users)
+ * (Notifications) -- System
+ * System -- (Map Tracking) 
+ * }
+ * @enduml
+ */
+
+/**
+ * @startuml
+ * Class DonLimpio
+ * Class User{
+ *  -String Name
+ *  -String username
+ *  -String password
+ *  -double score
+ *  -long phoneNumber
+ *  -String email
+ *  -long identifier
+ * }
+ * Class EnumUserRole <<Enum>>{
+ *  -int code
+ *  -String description
+ * }
+ * Class Service{
+ *  -String description
+ *  -Date createdAt
+ *  -Date startDate
+ *  -Date dueDate
+ *  -int esstimatedDuration
+ * }
+ * Class EnumServiceType <<Enum>>{
+ *  -int code
+ *  -String description
+ * }
+ * Class ServiceLocation{
+ *  -double latitude
+ *  -double longitude
+ *  -String address
+ * }
+ * Class City{
+ *  -int code
+ *  -String name
+ * }
+ * Class Invoice{
+ *  -long invoiceId
+ *  -double totalCost
+ *  -Date paidAt
+ *  -String transactionNumber
+ * }
+ * Class CreditCard{
+ *  -String cardNumber
+ *  -Date validThru
+ *  -String verificationCode
+ * }
+ * Class PaymentMethod{
+ *  -String thirdPartyName
+ *  -long thirdPartyId
+ * }
+ * Class Bank{
+ *  -String bankName
+ *  -String businessName
+ *  -long id
+ * }
+ * 
+ * DonLimpio *-- "0..*" User : has
+ * DonLimpio *-- Service :has
+ * User *-- "0..*" Service : has
+ * EnumUserRole *-- User
+ * User -right-* "1..*" CreditCard
+ * Service -right-> "1" ServiceLocation
+ * ServiceLocation -right-> "1" City : has
+ * Service -left-> "1" EnumServiceType
+ * Invoice "1" <-- "1" Service : has
+ * Invoice --> "1" PaymentMethod : has
+ * CreditCard "1" <-- Invoice : has
+ * Bank "1" <-- CreditCard : belongs to
+ * @enduml
+ */

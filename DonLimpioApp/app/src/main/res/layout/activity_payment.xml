@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="25dp"
+    tools:context=".PaymentActivity">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="Factura"
+    android:textSize="30dp"
+    android:id="@+id/invoice"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/invoice"
+        android:layout_marginTop="20dp"
+        android:id="@+id/servicePrice">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="30dp"
+            android:text="Servicio:"
+            android:textSize="23dp"
+            android:id="@+id/price"/>
+        <EditText
+            android:id="@+id/price1"
+            android:text="$ 123"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/servicePrice"
+        android:layout_marginTop="20dp"
+        android:id="@+id/deliveryPrice">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="30dp"
+            android:text="Domicilio:"
+            android:textSize="23dp"
+            android:id="@+id/delivery"/>
+        <EditText
+            android:id="@+id/price2"
+            android:text="$ 456"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/deliveryPrice"
+        android:layout_marginTop="20dp"
+        android:id="@+id/otherPrice">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="30dp"
+            android:text="Otros Gastos:"
+            android:textSize="23dp"
+            android:id="@+id/other"/>
+        <EditText
+            android:id="@+id/price3"
+            android:text="$ 789"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/otherPrice"
+        android:layout_marginTop="20dp"
+        android:id="@+id/totalPrice">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="30dp"
+            android:text="Total:"
+            android:textSize="23dp"
+            android:id="@+id/total"/>
+        <EditText
+            android:id="@+id/price4"
+            android:text="$ 1368"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/totalPrice"
+        android:text="Pagar"
+        android:background="@color/greenButtons"
+        android:layout_marginTop="25dp"
+        android:id="@+id/pay"/>
+
+</RelativeLayout>
