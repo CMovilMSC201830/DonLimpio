@@ -25,5 +25,7 @@
     <string name="lastname_only_letters">El Apellido debe tener solo letras, entre 4 y 10 caracteres</string>
     <string name="no_empty">Los campos no pueden estár vacios</string>
     <string name="phone_matches">Teléfono debe tener 10 dígitos</string>
+    <string name="title_activity_location_map">Localización</string>
+    <string name="address">Dirección</string>
 
 </resources>
