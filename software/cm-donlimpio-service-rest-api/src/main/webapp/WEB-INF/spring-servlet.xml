@@ -10,13 +10,13 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="org.javeriana.cm.donlimpio.rest.service" />
+    <context:component-scan base-package="org.javeriana.cm.donlimpio.rest.api" />
     <mvc:annotation-driven/>
 
     <!-- swagger -->
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
-    <bean id="swaggerConfig" class="org.javeriana.cm.donlimpio.rest.service.config.SwaggerConfig" />
+    <bean id="swaggerConfig" class="org.javeriana.cm.donlimpio.rest.api.config.swagger.SwaggerConfig" />
 
     <!-- Property placeholder -->
     <context:property-placeholder location="classpath:application.properties" />

@@ -16,7 +16,7 @@
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>org.javeriana.cm.donlimpio.rest.service</param-value>
+        <param-value>org.javeriana.cm.donlimpio.rest.api</param-value>
     </context-param>
 
     <listener>
