@@ -4,29 +4,21 @@ import java.util.List;
 
 public class User {
 
-    long userId;
     String firstName;
     String lastName;
-    String username;
-    String password;
-    String userEmail;
     long userPhoneNumber;
     double userScore;
     UserRole userRole;
     List<Service> services;
     List<CreditCard> creditCards;
 
-    public User(String firstName, String lastName, String username, String password, String userEmail, long userPhoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.userEmail = userEmail;
-        this.userPhoneNumber = userPhoneNumber;
+    public User() {
     }
 
-    public long getUserId() {
-        return userId;
+    public User(String firstName, String lastName, long userPhoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userPhoneNumber = userPhoneNumber;
     }
 
     public String getFirstName() {
@@ -35,18 +27,6 @@ public class User {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
     }
 
     public long getUserPhoneNumber() {
@@ -75,18 +55,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     public void setUserPhoneNumber(long userPhoneNumber) {

@@ -3,14 +3,14 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_repeat_password">Repita el Password</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="prompt_repeat_password">Repita la contraseña</string>
     <string name="prompt_phone">Teléfono</string>
     <string name="action_sign_in">Ingresar</string>
     <string name="action_sign_in_short">Ingresar</string>
     <string name="error_invalid_email">La dirección de correo no es válida.</string>
-    <string name="error_invalid_password">El password es muy corto.</string>
-    <string name="error_incorrect_password">El password es incorrecto.</string>
+    <string name="error_invalid_password">La contraseña es muy corta.</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta.</string>
     <string name="error_field_required">Campo requerido</string>
     <string name="permission_rationale">"Permiso de contacto es necesario para sugerencias."</string>
     <string name="o">O</string>
