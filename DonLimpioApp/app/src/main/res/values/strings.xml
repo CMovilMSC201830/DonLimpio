@@ -27,5 +27,8 @@
     <string name="phone_matches">Teléfono debe tener 10 dígitos</string>
     <string name="title_activity_location_map">Localización</string>
     <string name="address">Dirección</string>
+    <string name="menulogout">Cerrar sesion</string>
+    <string name="menuConfiguracion">Configuracion</string>
+    <string name="auth_failed">Autorización fallida</string>
 
 </resources>

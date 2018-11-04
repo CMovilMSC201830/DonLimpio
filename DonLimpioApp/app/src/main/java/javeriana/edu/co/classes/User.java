@@ -4,6 +4,7 @@ import java.util.List;
 
 public class User {
 
+    String email;
     String firstName;
     String lastName;
     long userPhoneNumber;
@@ -15,10 +16,12 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, long userPhoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userPhoneNumber = userPhoneNumber;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -39,14 +42,6 @@ public class User {
 
     public UserRole getUserRole() {
         return userRole;
-    }
-
-    public List<Service> getServices() {
-        return services;
-    }
-
-    public List<CreditCard> getCreditCards() {
-        return creditCards;
     }
 
     public void setFirstName(String firstName) {
