@@ -39,16 +39,17 @@
             />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="0.5"
-            android:background="#ff9052"
-            android:textColor="#fff"
-            android:text="Plomería"
-            android:layout_marginRight="8dp"
-            android:gravity="bottom|right"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp"/>
+          android:id="@+id/plomeria"
+          android:layout_width="0dp"
+          android:layout_height="100dp"
+          android:layout_weight="0.5"
+          android:layout_marginRight="8dp"
+          android:paddingBottom="5dp"
+          android:paddingRight="5dp"
+          android:background="#ff9052"
+          android:gravity="bottom|right"
+          android:text="Plomería"
+          android:textColor="#fff"/>
 
     </LinearLayout>
     <LinearLayout
