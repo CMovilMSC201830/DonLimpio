@@ -37,7 +37,7 @@ public class ServicesActivity extends AppCompatActivity {
         mPlomeria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ServicesActivity.this, LocationMapActivity.class);
+                Intent i = new Intent(ServicesActivity.this, SplashActivity.class);
                 startActivity(i);
             }
         });
