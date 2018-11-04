@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "166926263135",
+    "firebase_url": "https://donlimpioapp.firebaseio.com",
+    "project_id": "donlimpioapp",
+    "storage_bucket": "donlimpioapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166926263135:android:bd1ee457e9e85d95",
+        "android_client_info": {
+          "package_name": "javeriana.edu.co.donlimpio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166926263135-qs3l90qo0ttp9r23hvfoutoho4263gt6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "javeriana.edu.co.donlimpio",
+            "certificate_hash": "4efdbd102bb4db5ed56f91371d53563f4849546c"
+          }
+        },
+        {
+          "client_id": "166926263135-h7h1igbhj29on4glnm5hipeth8rnkgu0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfmRuGybe_oO2lQBK9Tcc9_sGFFeMMyRo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166926263135-h7h1igbhj29on4glnm5hipeth8rnkgu0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
