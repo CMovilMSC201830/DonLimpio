@@ -131,6 +131,7 @@
                     android:layout_height="80dp"
                     android:layout_weight="1"
                     android:background="@color/common_google_signin_btn_text_dark_default"
+                    android:padding="2dp"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/envelope" />
 
@@ -140,6 +141,7 @@
                     android:layout_height="80dp"
                     android:layout_weight="1"
                     android:background="@color/common_google_signin_btn_text_dark_default"
+                    android:padding="9dp"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/facebook" />
 
