@@ -30,6 +30,29 @@
     <string name="menulogout">Cerrar sesion</string>
     <string name="menuConfiguracion">Configuracion</string>
     <string name="auth_failed">Autorización fallida</string>
+    <string name="dom_conf">Configuración Limpieza Doméstica</string>
+    <string name="promp_combo_building_type">Seleccione Uno</string>
+    <string name="build_desc">Descripción vivienda:</string>
+    <string name="ironing_service">Servicio de planchado</string>
+    <string name="washing_service">Servicio de lavado Automático/Manual</string>
+    <string name="outside_washing">Lavado de terrazas</string>
+    <string name="lbl_choose_add_services">Seleccione los servicios a tomar</string>
+    <string name="meters_lbl_advice">Cuantos metros tiene el lugar de Limpieza en total, si no lo sabe coloque un valor aproximado:</string>
+    <string name="next">Siguiente</string>
+    <string name="here_goes_address">Aquí va la dirección</string>
+    <string-array name="building_types">
+        <item>Toda la casa</item>
+        <item>1 - 3 Baños</item>
+        <item>3 o más Baños</item>
+        <item>1 o 2 Habitaciones</item>
+        <item>3 o más habitaciones</item>
+        <item>1 Baño - 1 habitación - Sala;Comedor;Cocina</item>
+        <item>3 Baños - 3 habitaciónes - Sala;Comedor;Cocina</item>
+        <item>2 Baños - 2 Habitaciones - Sala;Comedor;Cocina</item>
+    </string-array>
+    <string name="title_activity_set_position">Map</string>
+    <string name="title_activity_tracking_service">Map</string>
+    <string name="home">home</string>
 
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>

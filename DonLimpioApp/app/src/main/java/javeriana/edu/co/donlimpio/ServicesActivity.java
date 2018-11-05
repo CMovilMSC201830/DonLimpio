@@ -29,7 +29,7 @@ public class ServicesActivity extends AppCompatActivity {
         mLimpieza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), LocationMapActivity.class);
+                Intent i = new Intent(getApplicationContext(), DomesticConfigurationActivity.class);
                 startActivity(i);
             }
         });

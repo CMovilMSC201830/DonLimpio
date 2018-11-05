@@ -64,6 +64,14 @@
         <activity
             android:name=".LocationMapActivity"
             android:label="@string/title_activity_location_map" />
+        <activity android:name=".DomesticConfigurationActivity" />
+        <activity
+            android:name=".SetPositionActivity"
+            android:label="@string/title_activity_set_position" />
+        <activity
+            android:name=".TrackingServiceActivity"
+            android:label="@string/title_activity_tracking_service"></activity>
+            android:label="@string/title_activity_location_map" />
         <!--<activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

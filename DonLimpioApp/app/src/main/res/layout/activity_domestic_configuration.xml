@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    tools:context=".DomesticConfigurationActivity">
+
+    <TextView
+        android:id="@+id/confDom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dom_conf"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/bildDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/confDom"
+        android:layout_marginTop="10dp"
+        android:text="@string/build_desc"
+        android:textSize="15dp" />
+
+    <Spinner
+        android:id="@+id/spinnerBuild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bildDesc"
+        android:layout_marginTop="5dp"
+        android:entries="@array/building_types"
+        android:prompt="@string/promp_combo_building_type" />
+
+    <TextView
+        android:id="@+id/optionsConf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerBuild"
+        android:layout_marginTop="10dp"
+        android:text="@string/lbl_choose_add_services"
+        android:textSize="15dp" />
+
+
+    <CheckBox
+        android:id="@+id/ironing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/optionsConf"
+        android:layout_marginTop="10dp"
+        android:text="@string/ironing_service" />
+
+    <CheckBox
+        android:id="@+id/washing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ironing"
+        android:text="@string/washing_service" />
+
+    <CheckBox
+        android:id="@+id/outside"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/washing"
+        android:text="@string/outside_washing" />
+
+    <TextView
+        android:id="@+id/meters_lbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/outside"
+        android:layout_marginTop="10dp"
+        android:text="@string/meters_lbl_advice"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/meters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/meters_lbl"
+        android:layout_marginTop="5dp"
+        android:hint="en metros"
+        android:inputType="number" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/next_step"
+        android:layout_below="@id/meters"
+        android:layout_marginTop="40dp"
+        android:text="@string/next" />
+
+</RelativeLayout>
