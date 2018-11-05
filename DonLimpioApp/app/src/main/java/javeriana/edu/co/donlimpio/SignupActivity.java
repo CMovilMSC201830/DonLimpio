@@ -16,6 +16,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import javeriana.edu.co.classes.User;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class SignupActivity extends AppCompatActivity {
   private Button mSignupBtn;
 
   FirebaseAuth mAuth;
+  DatabaseReference myRef;
 
 
   @Override
@@ -53,6 +58,8 @@ public class SignupActivity extends AppCompatActivity {
 
       }
     });
+
+
   }
 
   private void createAccount() {
@@ -98,6 +105,9 @@ public class SignupActivity extends AppCompatActivity {
                     mName.getText().toString() + " " + mLastName.getText().toString());
                 //upcrb.setPhotoUri(Uri.parse("res/to/pic"));//fake uri, use Firebase Storage
                 user.updateProfile(upcrb.build());
+                myRef = FirebaseDatabase.getInstance().getReference("Users" + user.getUid());
+                myRef.setValue(new User(mEmail.getText().toString(),mName.getText().toString(),
+                        mLastName.getText().toString(),Long.parseLong(mPhone.getText().toString())));
                 startActivity(
                     new Intent(SignupActivity.this, ServicesActivity.class)); //o en el listener
               }

@@ -16,6 +16,13 @@ public class User {
     public User() {
     }
 
+    public User(String email, String firstName, String lastName, long userPhoneNumber) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userPhoneNumber = userPhoneNumber;
+    }
+
     public String getEmail() {
         return email;
     }

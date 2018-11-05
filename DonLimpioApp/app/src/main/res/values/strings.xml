@@ -14,7 +14,7 @@
     <string name="error_field_required">Campo requerido</string>
     <string name="permission_rationale">"Permiso de contacto es necesario para sugerencias."</string>
     <string name="o">O</string>
-    <string name="register">REGISTRARSE</string>
+    <string name="register">REGISTRATE</string>
     <string name="login_facebook_button">Ingresar con facebook</string>
     <string name="login_google_button">Ingresar con Google</string>
     <string name="name">Nombre</string>

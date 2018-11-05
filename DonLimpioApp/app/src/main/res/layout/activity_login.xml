@@ -61,6 +61,8 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/maven_pro"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
@@ -77,6 +79,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/maven_pro"
                     android:hint="@string/prompt_password"
                     android:imeActionId="6"
@@ -101,75 +104,55 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <View
-                    android:id="@+id/divider1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.4"
-                    android:background="@android:color/darker_gray"
-                    android:gravity="center|center_vertical"/>
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
-                    android:gravity="center|center_vertical"
-
-                    android:text="@string/o" />
-
-                <View
-                    android:id="@+id/divider2"
-                    android:layout_weight="0.4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center|center_vertical"
-                    android:background="@android:color/darker_gray" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/register_text_view"
                 style="@android:style/Widget.Material.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/maven_pro"
                 android:gravity="center"
                 android:text="@string/register"
-                android:textColor="@android:color/holo_blue_dark"
-                android:textSize="24sp"
-                android:textStyle="normal|bold" />
-
-            <Button
-                android:id="@+id/facebook_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="?attr/colorPrimary"
-                android:fontFamily="@font/maven_pro"
-                android:text="@string/login_facebook_button"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/common_google_signin_btn_text_light_default"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
 
-            <Button
-                android:id="@+id/google_sign_in_button"
-                style="?android:textAppearanceSmall"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent"
-                android:fontFamily="@font/maven_pro"
-                android:text="@string/login_google_button"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageButton
+                    android:id="@+id/email_imageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/envelope" />
+
+                <ImageButton
+                    android:id="@+id/facebook_imageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/facebook" />
+
+                <ImageButton
+                    android:id="@+id/google_imageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/googleplus" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
