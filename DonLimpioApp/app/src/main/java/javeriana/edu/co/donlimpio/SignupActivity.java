@@ -24,6 +24,7 @@ import javeriana.edu.co.classes.User;
 public class SignupActivity extends AppCompatActivity {
 
   private static final String TAG_SIGNIN = "EMAIL_SIGNIN";
+  private static final String TAG = "AddToDatabase";
   private EditText mName;
   private EditText mLastName;
   private EditText mEmail;
@@ -33,8 +34,8 @@ public class SignupActivity extends AppCompatActivity {
   private Button mSignupBtn;
 
   FirebaseAuth mAuth;
+  FirebaseAuth.AuthStateListener mAuthListener;
   DatabaseReference myRef;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,25 @@ public class SignupActivity extends AppCompatActivity {
     mPhone = (EditText) findViewById(R.id.input_phoneNumber);
     mSignupBtn = (Button) findViewById(R.id.signup_btn);
 
+    mAuthListener = new FirebaseAuth.AuthStateListener() {
+      @Override
+      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+          // User is signed in
+          Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+          Toast.makeText(getBaseContext(),"Successfully signed in with: " + user.getEmail(),
+                  Toast.LENGTH_LONG).show();
+        } else {
+          // User is signed out
+          Log.d(TAG, "onAuthStateChanged:signed_out");
+          Toast.makeText(getBaseContext(),"Successfully signed out.",
+                  Toast.LENGTH_LONG).show();
+        }
+        // ...
+      }
+    };
+
     mSignupBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -59,8 +79,22 @@ public class SignupActivity extends AppCompatActivity {
       }
     });
 
-
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    mAuth.addAuthStateListener(mAuthListener);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    if (mAuthListener != null) {
+      mAuth.removeAuthStateListener(mAuthListener);
+    }
+  }
+
 
   private void createAccount() {
     boolean okName = isAlpha(mName.getText().toString());
@@ -105,11 +139,12 @@ public class SignupActivity extends AppCompatActivity {
                     mName.getText().toString() + " " + mLastName.getText().toString());
                 //upcrb.setPhotoUri(Uri.parse("res/to/pic"));//fake uri, use Firebase Storage
                 user.updateProfile(upcrb.build());
-                myRef = FirebaseDatabase.getInstance().getReference("Users" + user.getUid());
-                myRef.setValue(new User(mEmail.getText().toString(),mName.getText().toString(),
+                myRef = FirebaseDatabase.getInstance().getReference();
+                myRef.child("Users").child(user.getUid()).setValue(new User(mEmail.getText().toString(),mName.getText().toString(),
                         mLastName.getText().toString(),Long.parseLong(mPhone.getText().toString())));
                 startActivity(
                     new Intent(SignupActivity.this, ServicesActivity.class)); //o en el listener
+                finish();
               }
             }
             if (!task.isSuccessful()) {

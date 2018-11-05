@@ -136,10 +136,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        Intent i = new Intent(getBaseContext(), ServicesActivity.class);
+
         if (currentUser != null){
+            Intent i = new Intent(getBaseContext(), ServicesActivity.class);
             startActivity(i);
             finish();
+        } else {
+            mEmailView.getText().clear();
+            mPasswordView.getText().clear();
+            showProgress(false);
         }
     }
 
@@ -209,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -255,8 +260,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             // ...
                         }
                     });
-            Intent i = new Intent(getApplicationContext(), ServicesActivity.class);
-            startActivity(i);
+
+//            Intent i = new Intent(getApplicationContext(), ServicesActivity.class);
+//            startActivity(i);
            //mAuthTask.execute((Void) null);
         }
     }
