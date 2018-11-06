@@ -18,12 +18,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +40,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import javeriana.edu.co.classes.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -38,6 +48,10 @@ public class ProfileActivity extends AppCompatActivity {
     public static final int IMAGE_REQUEST = 100;
     public static final int CAMERA_REQUEST = 20;
     private StorageReference mStorageRef, imageRef;
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
     CircleImageView circlePhoto;
     //ImageButton circlePhoto;
     Uri imageUri, downloadPhoto;
@@ -45,6 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
     UploadTask uploadTask;
     Button ownS;
     View profileLayout;
+    String userID;
+    TextView fullname, useremail, userphone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +68,49 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         profileLayout = findViewById(R.id.profile_layout);
+        fullname = findViewById(R.id.name_TextView);
+        useremail = findViewById(R.id.email_TextView);
+        userphone = findViewById(R.id.phone_TextView);
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null){
+                    Toast.makeText(getBaseContext(), "Successfully signed with " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "User has signed out", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    User u = new User();
+                    u.setFirstName(ds.child(userID).getValue(User.class).getFirstName());
+                    u.setLastName(ds.child(userID).getValue(User.class).getLastName());
+                    u.setEmail(ds.child(userID).getValue(User.class).getEmail());
+                    u.setUserPhoneNumber(ds.child(userID).getValue(User.class).getUserPhoneNumber());
+
+                    fullname.setText(u.getFirstName() + " " + u.getLastName());
+                    useremail.setText(u.getEmail());
+                    userphone.setText(Long.toString(u.getUserPhoneNumber()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         ownS = (Button) findViewById(R.id.own_services);
         circlePhoto = (CircleImageView) findViewById(R.id.profile_image);
@@ -90,6 +149,19 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mAuthListener != null)
+            mAuth.removeAuthStateListener(mAuthListener);
     }
 
     @Override
