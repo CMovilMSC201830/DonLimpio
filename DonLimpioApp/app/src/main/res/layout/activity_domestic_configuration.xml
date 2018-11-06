@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,36 +11,60 @@
         android:id="@+id/confDom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
         android:text="@string/dom_conf"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/bildDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/confDom"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
         android:text="@string/build_desc"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confDom" />
 
     <Spinner
         android:id="@+id/spinnerBuild"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bildDesc"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:entries="@array/building_types"
-        android:prompt="@string/promp_combo_building_type" />
+        android:prompt="@string/promp_combo_building_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bildDesc" />
 
     <TextView
         android:id="@+id/optionsConf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinnerBuild"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
         android:text="@string/lbl_choose_add_services"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBuild" />
 
 
     <CheckBox
@@ -48,47 +72,88 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/optionsConf"
-        android:layout_marginTop="10dp"
-        android:text="@string/ironing_service" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
+        android:text="@string/ironing_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/optionsConf" />
 
     <CheckBox
         android:id="@+id/washing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ironing"
-        android:text="@string/washing_service" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
+        android:text="@string/washing_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ironing" />
 
     <CheckBox
         android:id="@+id/outside"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/washing"
-        android:text="@string/outside_washing" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
+        android:text="@string/outside_washing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/washing" />
 
     <TextView
         android:id="@+id/meters_lbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/outside"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/meters_lbl_advice"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outside" />
 
     <EditText
         android:id="@+id/meters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/meters_lbl"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:hint="en metros"
-        android:inputType="number" />
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meters_lbl" />
 
     <Button
+        android:id="@+id/next_step"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/next_step"
         android:layout_below="@id/meters"
-        android:layout_marginTop="40dp"
-        android:text="@string/next" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/maven_pro"
+        android:text="@string/next"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meters" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

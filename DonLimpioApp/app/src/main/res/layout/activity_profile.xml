@@ -117,9 +117,10 @@
         android:layout_below="@id/add"
         android:layout_alignParentStart="true"
         android:layout_marginTop="35dp"
-        android:background="@android:color/holo_blue_dark"
+        android:background="@color/colorPrimaryDark"
         android:fontFamily="@font/maven_pro"
         android:text="@string/mis_servicios_buttonText"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

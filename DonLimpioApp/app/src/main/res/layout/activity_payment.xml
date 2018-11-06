@@ -1,116 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="25dp"
     tools:context=".PaymentActivity">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:text="Factura"
-    android:textSize="30dp"
-    android:id="@+id/invoice"/>
+
+    <TextView
+        android:id="@+id/invoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/maven_pro"
+        android:text="Factura"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/servicePrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/invoice"
-        android:layout_marginTop="20dp"
-        android:id="@+id/servicePrice">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invoice">
+
         <TextView
+            android:id="@+id/price"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
             android:layout_height="30dp"
+            android:layout_weight="0.7"
+            android:fontFamily="@font/maven_pro"
             android:text="Servicio:"
-            android:textSize="23dp"
-            android:id="@+id/price"/>
+            android:textSize="23dp" />
+
         <EditText
             android:id="@+id/price1"
-            android:text="$ 123"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:focusable="false"/>
+            android:layout_weight="0.3"
+            android:focusable="false"
+            android:fontFamily="@font/maven_pro"
+            android:text="$ 123" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/deliveryPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/servicePrice"
-        android:layout_marginTop="20dp"
-        android:id="@+id/deliveryPrice">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/servicePrice">
+
         <TextView
+            android:id="@+id/delivery"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
             android:layout_height="30dp"
+            android:layout_weight="0.7"
+            android:fontFamily="@font/maven_pro"
             android:text="Domicilio:"
-            android:textSize="23dp"
-            android:id="@+id/delivery"/>
+            android:textSize="23dp" />
+
         <EditText
             android:id="@+id/price2"
-            android:text="$ 456"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:focusable="false"/>
+            android:layout_weight="0.3"
+            android:focusable="false"
+            android:fontFamily="@font/maven_pro"
+            android:text="$ 456" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/otherPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/deliveryPrice"
-        android:layout_marginTop="20dp"
-        android:id="@+id/otherPrice">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deliveryPrice">
+
         <TextView
+            android:id="@+id/other"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
             android:layout_height="30dp"
+            android:layout_weight="0.7"
+            android:fontFamily="@font/maven_pro"
             android:text="Otros Gastos:"
-            android:textSize="23dp"
-            android:id="@+id/other"/>
+            android:textSize="23dp" />
+
         <EditText
             android:id="@+id/price3"
-            android:text="$ 789"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:focusable="false"/>
+            android:layout_weight="0.3"
+            android:focusable="false"
+            android:fontFamily="@font/maven_pro"
+            android:text="$ 789" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/totalPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/otherPrice"
-        android:layout_marginTop="20dp"
-        android:id="@+id/totalPrice">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otherPrice">
+
         <TextView
+            android:id="@+id/total"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
             android:layout_height="30dp"
+            android:layout_weight="0.7"
+            android:fontFamily="@font/maven_pro"
             android:text="Total:"
-            android:textSize="23dp"
-            android:id="@+id/total"/>
+            android:textSize="23dp" />
+
         <EditText
             android:id="@+id/price4"
-            android:text="$ 1368"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="wrap_content"
-            android:focusable="false"/>
+            android:layout_weight="0.3"
+            android:focusable="false"
+            android:fontFamily="@font/maven_pro"
+            android:text="$ 1368" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/pay"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/totalPrice"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/maven_pro"
         android:text="Pagar"
-        android:background="@color/greenButtons"
-        android:layout_marginTop="25dp"
-        android:id="@+id/pay"/>
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalPrice" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

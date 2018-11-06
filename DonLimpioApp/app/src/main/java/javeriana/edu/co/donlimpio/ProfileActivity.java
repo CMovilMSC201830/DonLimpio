@@ -1,5 +1,6 @@
 package javeriana.edu.co.donlimpio;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -38,6 +41,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javeriana.edu.co.classes.User;
@@ -59,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
     UploadTask uploadTask;
     Button ownS;
     View profileLayout;
-    String userID;
+    String userID, photoURL;
     TextView fullname, useremail, userphone;
 
     @Override
@@ -72,9 +76,12 @@ public class ProfileActivity extends AppCompatActivity {
         useremail = findViewById(R.id.email_TextView);
         userphone = findViewById(R.id.phone_TextView);
 
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://donlimpioapp.appspot.com/Users/" + userID + "/profilePhoto");
+
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
+        imageRef = FirebaseStorage.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
@@ -111,6 +118,20 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        photoURL = mStorageRef.child("Users/").child(userID).child("profilePhoto").getDownloadUrl().toString();
+        mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(photoURL).into(circlePhoto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getBaseContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         ownS = (Button) findViewById(R.id.own_services);
         circlePhoto = (CircleImageView) findViewById(R.id.profile_image);
@@ -224,6 +245,7 @@ public class ProfileActivity extends AppCompatActivity {
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                     BitmapFactory.decodeFile(imageUri.getPath()).compress(Bitmap.CompressFormat.JPEG, 80, bytes);
                     circlePhoto.setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray())));
+                    uploadFireBase();
                 }
             }
             case IMAGE_REQUEST: {
@@ -231,6 +253,7 @@ public class ProfileActivity extends AppCompatActivity {
                     try{
                         imageUri = data.getData();
                         circlePhoto.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri)));
+                        uploadFireBase();
                     }catch (Exception e){
                         Log.d(TAG, e.getMessage());
                         e.printStackTrace();
@@ -241,20 +264,34 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void uploadFireBase(){
-        uploadTask = imageRef.putFile(imageUri);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Snackbar.make(profileLayout, "¡Hubo error subiendo la foto!",
-                        Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getBaseContext(), "Foto se cargo exitosamente", Toast.LENGTH_LONG).show();
-                //downloadPhoto = taskSnapshot.getDownloadUrl();
-            }
-        });
+
+        if (imageUri != null){
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = mStorageRef.child("Users/").child(userID).child("profilePhoto");
+            ref.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getBaseContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getBaseContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            .getTotalByteCount());
+                    progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                }
+            });
+        }
     }
 
     private String getRealPathFromURI(Uri contentURI) {

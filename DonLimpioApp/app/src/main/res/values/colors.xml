@@ -8,7 +8,7 @@
     <color name="black_overlay">#66000000</color>
     -->
     <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorPrimaryDark">#0288d1</color>
     <color name="colorPrimaryLight">#B3E5FC</color>
     <color name="colorAccent">#03A9F4</color>
     <color name="colorPrimaryText">#212121</color>
