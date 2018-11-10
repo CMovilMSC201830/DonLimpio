@@ -23,6 +23,7 @@
     android:name="android.hardware.camera2"
     android:required="true"/>
 
+
   <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
@@ -80,34 +81,40 @@
       android:name=".TrackingServiceActivity"/>
     android:label="@string/title_activity_location_map" />
     <!--
-            <activity
-            android:name=".SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash"
-            android:theme="@style/FullscreenTheme"></activity>
-        -->
+        <activity
+        android:name=".SplashActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/title_activity_splash"
+        android:theme="@style/FullscreenTheme"></activity>
+    -->
     <activity android:name=".FacebookActivity">
     </activity>
 
-    <meta-data android:name="com.facebook.sdk.ApplicationId"
+    <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
       android:value="@string/facebook_app_id"/>
 
-    <activity android:name="com.facebook.FacebookActivity"
+    <activity
       android:configChanges=
         "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-      android:label="@string/app_name" />
+      android:label="@string/app_name"
+      android:name="com.facebook.FacebookActivity"/>
     <activity
-      android:name="com.facebook.CustomTabActivity"
-      android:exported="true">
+      android:exported="true"
+      android:name="com.facebook.CustomTabActivity">
       <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="@string/fb_login_protocol_scheme" />
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data android:scheme="@string/fb_login_protocol_scheme"/>
       </intent-filter>
     </activity>
 
 
+    <activity
+      android:name=".CarWashingActivity"></activity>
   </application>
 
-</manifest>
+  </manifest>
