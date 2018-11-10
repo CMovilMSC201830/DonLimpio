@@ -58,6 +58,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -98,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
   CallbackManager mCallbackManager;
   GoogleSignInClient mGoogleSignInClient;
+  LoginManager mFbLoginManager;
 
   @Override
 
@@ -106,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     setContentView(R.layout.activity_login);
 
     emailSignin = findViewById(R.id.email_imageButton);
-//    facebookSignin = findViewById(R.id.facebook_imageButton);
+    facebookSignin = findViewById(R.id.facebook_imageButton);
     googleSignin = findViewById(R.id.google_imageButton);
 
     // Set up the login form.
@@ -179,6 +181,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
   private void handleFacebookAccessToken(AccessToken token) {
+    showProgress(true);
     Log.d(TAG, "handleFacebookAccessToken:" + token);
 
     AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -215,10 +218,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     FacebookSdk.sdkInitialize(getApplicationContext());
     AppEventsLogger.activateApp(this);
     mCallbackManager = CallbackManager.Factory.create();
-    LoginButton loginButton = findViewById(R.id.login_fb_button);
-    loginButton.setReadPermissions( "email", "public_profile");
+    mFbLoginManager = LoginManager.getInstance();
 
-    LoginManager.getInstance().registerCallback(mCallbackManager,
+
+    mFbLoginManager.registerCallback(mCallbackManager,
         new FacebookCallback<LoginResult>() {
           @Override
           public void onSuccess(LoginResult loginResult) {
@@ -237,21 +240,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // App code
           }
         });
-    loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-      @Override
-      public void onSuccess(LoginResult loginResult) {
-        Log.d(TAG, "facebook:onSuccess:" + loginResult);
-        handleFacebookAccessToken(loginResult.getAccessToken());
-      }
 
+    facebookSignin.setOnClickListener(new View.OnClickListener(){
       @Override
-      public void onCancel() {
-        Log.d(TAG, "facebook:onCancel");
-      }
-
-      @Override
-      public void onError(FacebookException error) {
-        Log.d(TAG, "facebook:onError", error);
+      public void onClick(View view) {
+        mFbLoginManager.logInWithReadPermissions(LoginActivity.this, Arrays
+            .asList("email", "public_profile"));
       }
     });
   }
