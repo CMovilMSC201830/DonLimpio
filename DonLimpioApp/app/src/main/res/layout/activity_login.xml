@@ -135,7 +135,7 @@
           android:scaleType="fitCenter"
           app:srcCompat="@drawable/envelope"/>
 
-        <!--<ImageButton
+        <ImageButton
           android:id="@+id/facebook_imageButton"
           android:layout_width="50dp"
           android:layout_height="80dp"
@@ -143,12 +143,8 @@
           android:padding="9dp"
           android:background="@color/common_google_signin_btn_text_dark_default"
           android:scaleType="fitCenter"
-          app:srcCompat="@drawable/facebook"/>-->
-
-        <com.facebook.login.widget.LoginButton
-          android:id="@+id/login_fb_button"
-          style="@style/FacebookLoginButton"
           app:srcCompat="@drawable/facebook"/>
+
 
         <ImageButton
           android:id="@+id/google_imageButton"
@@ -160,6 +156,13 @@
           app:srcCompat="@drawable/googleplus"/>
       </LinearLayout>
 
+      <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_fb_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
 
     </LinearLayout>
 

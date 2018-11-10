@@ -63,5 +63,6 @@
   <string name="mis_servicios_buttonText">Mis Servicios</string>
 
   <string name="facebook_app_id">191479331755441</string>
-  <string name="fb_login_protocol_scheme">fb501176030387251</string>
+  <string name="fb_login_protocol_scheme">fb191479331755441</string>
+
 </resources>
