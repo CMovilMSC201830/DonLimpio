@@ -13,15 +13,16 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ServicesActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    TextView mLimpieza, mPlomeria;
+    TextView mLimpieza, mPlomeria, mCarros;
     ImageButton btnProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
-        mLimpieza = (TextView) findViewById(R.id.limpieza);
-        mPlomeria = (TextView) findViewById(R.id.plomeria);
+        mLimpieza = findViewById(R.id.limpieza);
+        mPlomeria = findViewById(R.id.plomeria);
+        mCarros = findViewById(R.id.carros);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -42,11 +43,10 @@ public class ServicesActivity extends AppCompatActivity {
             }
         });
 
-        btnProfile = (ImageButton) findViewById(R.id.profile);
-        btnProfile.setOnClickListener(new View.OnClickListener() {
+        mCarros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                Intent i = new Intent(ServicesActivity.this, CarWashingActivity.class);
                 startActivity(i);
             }
         });
@@ -68,7 +68,8 @@ public class ServicesActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (itemClicked == R.id.menuSettings) {
-            //Abrir actividad para configuración etc
+            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
