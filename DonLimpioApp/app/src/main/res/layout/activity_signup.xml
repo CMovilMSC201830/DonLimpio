@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:id="@+id/signup_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:orientation="vertical"
         android:layout_margin="19dp">
 
-        <ImageButton
+        <!--<ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -21,6 +22,14 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:scaleType="fitCenter"
+            android:src="@drawable/photocamera" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/signup_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/photocamera" />
 
         <!--  First Name Label -->
@@ -129,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@color/colorPrimaryDark"
             android:fontFamily="@font/maven_pro"
             android:text="@string/doSignup"
             android:textColor="@color/common_google_signin_btn_text_dark_default"

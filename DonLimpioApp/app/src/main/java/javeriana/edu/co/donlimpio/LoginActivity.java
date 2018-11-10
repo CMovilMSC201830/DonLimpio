@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,10 +76,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TextView mRegisterTextView;
     private FirebaseAuth mAuth;
 
+    ImageButton emailSignin;
+    ImageButton facebookSignin;
+    ImageButton googleSignin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        emailSignin = (ImageButton) findViewById(R.id.email_imageButton);
+        facebookSignin = (ImageButton) findViewById(R.id.facebook_imageButton);
+        googleSignin = (ImageButton) findViewById(R.id.google_imageButton);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -107,9 +117,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mRegisterTextView = findViewById(R.id.register_text_view);
-        mRegisterTextView.setOnClickListener(new OnClickListener() {
+
+        emailSignin.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivity(i);
             }
@@ -125,10 +136,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        Intent i = new Intent(getBaseContext(), ServicesActivity.class);
+
         if (currentUser != null){
+            Intent i = new Intent(getBaseContext(), ServicesActivity.class);
             startActivity(i);
             finish();
+        } else {
+            mEmailView.getText().clear();
+            mPasswordView.getText().clear();
+            showProgress(false);
         }
     }
 
@@ -198,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -244,8 +260,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             // ...
                         }
                     });
-            Intent i = new Intent(getApplicationContext(), ServicesActivity.class);
-            startActivity(i);
+
+//            Intent i = new Intent(getApplicationContext(), ServicesActivity.class);
+//            startActivity(i);
            //mAuthTask.execute((Void) null);
         }
     }

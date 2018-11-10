@@ -37,7 +37,7 @@ public class ServicesActivity extends AppCompatActivity {
         mPlomeria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ServicesActivity.this, LocationMapActivity.class);
+                Intent i = new Intent(ServicesActivity.this, OwnServicesActivity.class);
                 startActivity(i);
             }
         });
@@ -66,6 +66,7 @@ public class ServicesActivity extends AppCompatActivity {
             Intent intent = new Intent(ServicesActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         } else if (itemClicked == R.id.menuSettings) {
             //Abrir actividad para configuración etc
         }
