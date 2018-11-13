@@ -23,19 +23,20 @@ public class Services implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "professional_id")
-    private String professionalId;
+    private String professional;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
-    private Categories categoryId;
+    private Categories category;
     @JoinColumn(name = "invoice_id", referencedColumnName = "id")
     @ManyToOne
-    private Invoices invoiceId;
+    private Invoices invoice;
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne
-    private Persona clientId;
+    private Persona persona;
     @JoinColumn(name = "persona_address_id", referencedColumnName = "id")
     @ManyToOne
-    private PersonaAddresses personaAddressId;
+    private PersonaAddresses personaAddress;
 }

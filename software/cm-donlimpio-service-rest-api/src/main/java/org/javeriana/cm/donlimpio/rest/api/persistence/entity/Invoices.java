@@ -24,14 +24,14 @@ public class Invoices implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "payment_method_id")
-    private Integer paymentMethodId;
     @Column(name = "payment_total", columnDefinition = "DECIMAL")
     private Long paymentTotal;
     @Lob
     @Column(name = "comments", columnDefinition = "TEXT")
     private String comments;
-    @OneToMany(mappedBy = "invoiceId")
-    private Collection<Services> servicesCollection;
+    @JoinColumn(name = "payment_method_id", referencedColumnName = "id")
+    @ManyToOne
+    private PaymentMethod paymentMethod;
 }

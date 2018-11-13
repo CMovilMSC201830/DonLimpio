@@ -27,8 +27,6 @@ public class PersonaAddresses implements Serializable {
     private Integer id;
     @Column(name = "address")
     private String address;
-    @OneToMany(mappedBy = "personaAddressId")
-    private Collection<Services> servicesCollection;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne
     private Persona personaId;

@@ -37,29 +37,11 @@ public class Persona implements Serializable {
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @Column(name = "username")
-    private String username;
-    @Basic(optional = false)
-    @Column(name = "password")
-    private String password;
-    @Basic(optional = false)
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-    @Lob
-    @Column(name = "user_picture", columnDefinition = "TEXT")
-    private String userPicture;
-    @JoinTable(name = "persona_profiles", joinColumns = {
-        @JoinColumn(name = "persona_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "profile_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Profiles> profilesCollection;
     @JoinColumn(name = "document_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private DocumentTypes documentType;
-    @OneToMany(mappedBy = "clientId")
-    private Collection<Services> servicesCollection;
-    @OneToMany(mappedBy = "personaId")
-    private Collection<PersonaAddresses> personaAddressesCollection;
     
 }
