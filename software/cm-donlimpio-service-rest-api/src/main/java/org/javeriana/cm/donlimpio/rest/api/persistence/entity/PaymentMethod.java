@@ -37,4 +37,6 @@ public class PaymentMethod implements Serializable {
     private String cardHolder;
     @Column(name = "franchise")
     private String franchise;
+    @Column(name = "persona_doc_id")
+    private Long persona_doc_id;
 }

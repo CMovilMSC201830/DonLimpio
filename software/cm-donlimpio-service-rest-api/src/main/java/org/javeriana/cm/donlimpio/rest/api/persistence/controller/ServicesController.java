@@ -1,7 +1,6 @@
 package org.javeriana.cm.donlimpio.rest.api.persistence.controller;
 
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.Categories;
-import org.javeriana.cm.donlimpio.rest.api.persistence.entity.DocumentTypes;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.PaymentMethod;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.Services;
 import org.javeriana.cm.donlimpio.rest.api.persistence.repository.*;
@@ -23,7 +22,7 @@ public class ServicesController {
     private PaymentMethodsRepository paymentMethodsRepository;
 
     @Autowired
-    private ServicesRepository servicesRepository;
+    private ServicesRepository servicesRepositoryImpl;
 
     public List<Categories> findAllCategories() {
         List<Categories> result = new ArrayList<>();
@@ -50,6 +49,18 @@ public class ServicesController {
     }
 
     public Services saveService(Services service) {
-        return servicesRepository.save(service);
+        return servicesRepositoryImpl.save(service);
+    }
+
+    public Optional<Services> findServicesById(int serviceId) {
+        return servicesRepositoryImpl.findById(serviceId);
+    }
+
+    public List<Services> findAllServicesByPersona(long personaId) {
+        return servicesRepositoryImpl.findAllByPersona(personaId);
+    }
+
+    public int updateStatusByPersona(int serviceId, int status) {
+        return servicesRepositoryImpl.updateStatusById(serviceId, status);
     }
 }

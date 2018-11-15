@@ -2,16 +2,16 @@ package org.javeriana.cm.donlimpio.rest.api.service.controller;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.javeriana.cm.donlimpio.rest.api.persistence.controller.InvoicesController;
-import org.javeriana.cm.donlimpio.rest.api.persistence.controller.PersonaController;
 import org.javeriana.cm.donlimpio.rest.api.persistence.controller.ServicesController;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.*;
+import org.javeriana.cm.donlimpio.rest.api.service.model.ServiceRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.javeriana.cm.donlimpio.rest.api.service.model.HttpRestResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @RestController
@@ -19,13 +19,7 @@ import java.util.List;
 public class ServicesRestController extends AbstractController {
 
     @Autowired
-    private PersonaController personaController;
-
-    @Autowired
     private ServicesController servicesController;
-
-    @Autowired
-    private InvoicesController invoicesController;
 
     @ApiOperation("Returns all possible categories for a service")
     @RequestMapping(value = "/search/categories", method = RequestMethod.GET)
@@ -50,31 +44,51 @@ public class ServicesRestController extends AbstractController {
     public HttpRestResponse saveService(@RequestBody(required = true) Services service) {
         HttpRestResponse response;
         try {
-            // Save person first
-            Persona persona = personaController.savePersona(service.getPersona());
-            PaymentMethod paymentMethod =
-                    personaController.savePaymentMethod(service.getInvoice().getPaymentMethod());
-            service.getInvoice().setPaymentMethod(paymentMethod);
-            // Save invoice
-            Invoices invoice = invoicesController.saveInvoice(service.getInvoice());
-            // Save persona address
-            PersonaAddresses personaAddresses = personaController.savePersonaAddress(service.getPersonaAddress());
-            // Update objects
-            service.setPersona(persona);
-            service.setInvoice(invoice);
-            service.setPersonaAddress(personaAddresses);
-            servicesController.saveService(service);
-            response = HttpRestResponse
+            Services services = servicesController.saveService(service);
+            response = ServiceRestResponse
                     .builder()
+                    .serviceId(services.getId())
                     .success(true)
                     .message("Servicio agendado exitosamente!").build();
         } catch(Exception ex) {
-            log.error("Error", ex);
-            response = HttpRestResponse
+            ex.printStackTrace();
+            response = ServiceRestResponse
                     .builder()
                     .success(false)
                     .message(String.format("Error al intentar crear servicio: %s", ex.getMessage())).build();
         }
         return response;
+    }
+
+    @ApiOperation("Returns the services by id")
+    @RequestMapping(value = "/search/byid/{id}", method = RequestMethod.GET)
+    public Optional<Services> searchServicesById(@PathVariable int id) {
+        return servicesController.findServicesById(id);
+    }
+
+    @ApiOperation("Returns the services by persona id")
+    @RequestMapping(value = "/search/bypersona/{id}", method = RequestMethod.GET)
+    public List<Services> searchServicesByPersona(@PathVariable long id) {
+        return servicesController.findAllServicesByPersona(id);
+    }
+
+    @ApiOperation("Updates a services's status")
+    @RequestMapping(value = "/upadate/status/{serviceId}/{statusId}", method = RequestMethod.POST)
+    public HttpRestResponse updateServiceByStatus(@PathVariable int serviceId, @PathVariable int statusId) {
+        int result = servicesController.updateStatusByPersona(serviceId, statusId);
+        String message = String.format("Actualizados %s entradas", result);
+        if (result > 0) {
+            return ServiceRestResponse
+                    .builder()
+                    .serviceId(serviceId)
+                    .success(true)
+                    .message(message).build();
+        } else {
+            return ServiceRestResponse
+                    .builder()
+                    .success(false)
+                    .serviceId(serviceId)
+                    .message(message).build();
+        }
     }
 }

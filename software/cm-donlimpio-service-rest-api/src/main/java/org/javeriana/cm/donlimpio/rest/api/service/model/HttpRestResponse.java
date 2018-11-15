@@ -1,10 +1,10 @@
 package org.javeriana.cm.donlimpio.rest.api.service.model;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@Builder
+@AllArgsConstructor
 public class HttpRestResponse {
     private boolean success;
     private String message;

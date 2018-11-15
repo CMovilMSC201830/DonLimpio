@@ -13,9 +13,7 @@ public interface DocumentTypesRepository extends CrudRepository<DocumentTypes, I
     }
 
     @Override
-    default Optional<DocumentTypes> findById(Integer id) {
-        return Optional.empty();
-    }
+    Optional<DocumentTypes> findById(Integer id);
 
     @Override
     Iterable<DocumentTypes> findAll();

@@ -22,12 +22,11 @@ public class PersonaAddresses implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "address")
     private String address;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne
-    private Persona personaId;
+    @Column(name = "persona_id")
+    private Long personaId;
 }
