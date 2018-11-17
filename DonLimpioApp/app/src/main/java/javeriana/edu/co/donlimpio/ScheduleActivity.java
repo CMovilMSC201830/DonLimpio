@@ -106,11 +106,11 @@ public class ScheduleActivity extends AppCompatActivity {
         });
 
 
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference().child("Users/").child(userID);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -127,15 +127,14 @@ public class ScheduleActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    User u = new User();
-                    u.setFirstName(ds.child(userID).getValue(User.class).getFirstName());
-                    u.setLastName(ds.child(userID).getValue(User.class).getLastName());
-                    u.setEmail(ds.child(userID).getValue(User.class).getEmail());
-                    u.setUserPhoneNumber(ds.child(userID).getValue(User.class).getUserPhoneNumber());
 
-                   mSalut.setText(u.getFirstName() + ", este es el resumen de tu solicitud");
-                }
+                User u = new User();
+                u.setFirstName(dataSnapshot.getValue(User.class).getFirstName());
+                u.setLastName(dataSnapshot.getValue(User.class).getLastName());
+                u.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                u.setUserPhoneNumber(dataSnapshot.getValue(User.class).getUserPhoneNumber());
+
+                mSalut.setText(u.getFirstName() + ", este es el resumen de tu solicitud");
             }
 
             @Override
