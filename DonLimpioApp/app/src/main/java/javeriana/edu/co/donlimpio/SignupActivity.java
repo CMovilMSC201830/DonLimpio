@@ -263,7 +263,7 @@ public class SignupActivity extends AppCompatActivity {
                                 user.updateProfile(upcrb.build());
                                 myRef = FirebaseDatabase.getInstance().getReference();
                                 myRef.child("Users").child(user.getUid()).setValue(new User(mEmail.getText().toString(), mName.getText().toString(),
-                                        mLastName.getText().toString(), Long.parseLong(mPhone.getText().toString())));
+                                        mLastName.getText().toString(), mPhone.getText().toString()));
                                 startActivity(new Intent(SignupActivity.this, ServicesActivity.class)); //o en el listener
                                 finish();
                             }
