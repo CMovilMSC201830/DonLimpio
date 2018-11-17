@@ -163,5 +163,6 @@
     <string name="facebook_app_id">191479331755441</string>
     <string name="fb_login_protocol_scheme">fb191479331755441</string>
     <string name="cedula">Cédula</string>
+    <string name="agendar_buscar">Agendar / Buscar</string>
 
 </resources>

@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/entry4" />
+        app:layout_constraintTop_toBottomOf="@+id/dir" />
 
     <EditText
         android:id="@+id/lbldate"
@@ -130,47 +130,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblhour" />
 
-    <TextView
-        android:id="@+id/lblP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/entry3"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/maven_pro"
-        android:text="Nombre prestador de Servicio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dir" />
-
-    <EditText
-        android:id="@+id/entry4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblP"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:focusable="false"
-        android:fontFamily="@font/maven_pro"
-        android:text="Brendan Moore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblP" />
 
     <Button
         android:id="@+id/btnDo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/entry4"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorPrimaryDark"
         android:fontFamily="@font/maven_pro"
-        android:text="Agendar / Pagar"
+        android:text="@string/agendar_buscar"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -195,4 +165,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDo" />
+
+    <FrameLayout
+        android:id="@+id/progressBarHolder"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        android:alpha="0.4"
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>
