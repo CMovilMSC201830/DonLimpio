@@ -96,7 +96,6 @@
         <item>Reparaciones mecanicas</item>
         <item>Rines y Llantas</item>
     </string-array>
->>>>>>> develop
 
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
