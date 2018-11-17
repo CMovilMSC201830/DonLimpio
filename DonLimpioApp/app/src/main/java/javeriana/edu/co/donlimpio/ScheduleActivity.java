@@ -147,6 +147,8 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public class SearchingTask extends AsyncTask<Void, Void, Void> {
+
+        String uuidClass;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -172,6 +174,7 @@ public class ScheduleActivity extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
             String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/services/notify/request/";
             String uuid = Calendar.getInstance().getTimeInMillis() + "";
+            uuidClass = uuid;
             String path = uuid + "/" + cat + "/" + 3;
 
             StringRequest req = new StringRequest(Request.Method.GET, url+path,
@@ -181,6 +184,7 @@ public class ScheduleActivity extends AppCompatActivity {
                             Intent i = new Intent(getApplicationContext(), SearchingActivity.class);
                             i.putExtra("DIRECTION", mAddress.getText().toString());
                             i.putExtra("SERVICE", cat);
+                            i.putExtra("REQUEST", uuidClass);
                             startActivity(i);
                         }
                     },
