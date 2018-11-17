@@ -77,7 +77,6 @@ public class SetPositionActivity extends FragmentActivity implements OnMapReadyC
     public static final double lowerLeftLongitude = -78.903968;
     public static final double upperRightLatitude = 11.983639;
     public static final double upperRigthLongitude = -71.869905;
-    private static final double RADIUS_OF_EARTH_KM = 6.371;
 
 
     private GoogleMap mMap;
@@ -206,8 +205,8 @@ public class SetPositionActivity extends FragmentActivity implements OnMapReadyC
 
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000); //tasa de refresco en milisegundos
-        mLocationRequest.setFastestInterval(5000); //máxima tasa de refresco
+        mLocationRequest.setInterval(100000000); //tasa de refresco en milisegundos
+        mLocationRequest.setFastestInterval(500000000); //máxima tasa de refresco
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }

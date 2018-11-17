@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -68,8 +69,14 @@ public class DateTimePickerActivity extends AppCompatActivity implements View.On
         choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
-                startActivity(i);
+                if (!etFecha.getText().toString().matches("") &&!etHora.getText().toString().matches("")) {
+                    Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
+                    i.putExtra("DATE",  etFecha.getText().toString());
+                    i.putExtra("TIME", etHora.getText().toString());
+                    startActivity(i);
+                } else {
+                    Toast.makeText(DateTimePickerActivity.this, "Enter date and time", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

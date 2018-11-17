@@ -20,4 +20,14 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="FacebookLoginButton">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:padding">9dp</item>
+        <item name="android:background">@color/common_google_signin_btn_text_dark_default</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">80dp</item>
+    </style>
+
 </resources>
