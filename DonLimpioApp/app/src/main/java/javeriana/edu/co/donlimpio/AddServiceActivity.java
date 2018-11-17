@@ -18,16 +18,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import javeriana.edu.co.classes.Provider;
 import javeriana.edu.co.classes.Service;
 import javeriana.edu.co.classes.User;
 
 public class AddServiceActivity extends AppCompatActivity {
 
-    private FirebaseUser user;
+    FirebaseUser user;
     DatabaseReference mRef;
     Spinner categoria, subcategoria;
     EditText servPrice;
-    Service providerServ;
+    Provider providerServ;
     String categServ, subcategServ;
     Button agregar;
 
@@ -36,7 +37,7 @@ public class AddServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service);
 
-        providerServ = new Service();
+        providerServ = new Provider();
 
         categoria = findViewById(R.id.category_spinner);
         subcategoria = findViewById(R.id.subcategory_spinner);
@@ -101,8 +102,8 @@ public class AddServiceActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 subcategServ = parent.getItemAtPosition(position).toString();
 
-                providerServ.setNombreServicio(categServ);
-                providerServ.setDescripcionServicio(subcategServ);
+                providerServ.setCategory(categServ);
+                providerServ.setDescription(subcategServ);
             }
 
             @Override
@@ -116,12 +117,11 @@ public class AddServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!servPrice.getText().toString().isEmpty()){
-                    providerServ.setPrecioServicio(Double.parseDouble(servPrice.getText().toString()));
-                    mRef.child("Providers").child(user.getUid()).setValue(providerServ);
+                    providerServ.setPriceService(Double.parseDouble(servPrice.getText().toString()));
+                    mRef.child("Providers").child(user.getUid()).push().setValue(providerServ);
+                    Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
                 }
-
-                Toast.makeText(getApplicationContext(), providerServ.getDescripcionServicio() + "\n"
-                        + providerServ.getNombreServicio(), Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
