@@ -25,6 +25,7 @@
     <string name="lastname_only_letters">El Apellido debe tener solo letras, entre 4 y 10 caracteres</string>
     <string name="no_empty">Los campos no pueden estár vacios</string>
     <string name="phone_matches">Teléfono debe tener 10 dígitos</string>
+    <string name="id_matches">Cédula debe tener 8 dígitos</string>
     <string name="title_activity_location_map">Localización</string>
     <string name="address">Dirección</string>
     <string name="menulogout">Cerrar sesion</string>
@@ -203,6 +204,9 @@
 
     <string name="facebook_app_id">191479331755441</string>
     <string name="fb_login_protocol_scheme">fb191479331755441</string>
+    <string name="cedula">Cédula</string>
+    <string name="agendar_buscar">Agendar / Buscar</string>
+
     <string name="mis_servicios_text">Mis Servicios</string>
     <string name="servicios_title_text">Servicios</string>
     <string name="donlimpio_text">DonLimpio</string>

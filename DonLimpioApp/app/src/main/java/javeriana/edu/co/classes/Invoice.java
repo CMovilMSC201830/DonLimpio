@@ -2,66 +2,57 @@ package javeriana.edu.co.classes;
 
 import java.util.Date;
 
-class Invoice {
+public class Invoice {
+    private long id;
 
-    long invoiceId;
-    double totalCost;
-    Date createdAt;
-    Date paidAt;
-    String transactionNumber;
-    CreditCard creditCard;
+    private long paymentTotal;
 
-    public Invoice(long invoiceId, double totalCost, Date createdAt, Date paidAt, String transactionNumber, CreditCard creditCard) {
-        this.invoiceId = invoiceId;
-        this.totalCost = totalCost;
-        this.createdAt = createdAt;
-        this.paidAt = paidAt;
-        this.transactionNumber = transactionNumber;
-        this.creditCard = creditCard;
+    private String comments;
+
+    private PaymentMethod paymentMethod;
+
+    private Date invoiceDate;
+
+    public Invoice() {
     }
 
-    public long getInvoiceId() {
-        return invoiceId;
+    public long getId() {
+        return id;
     }
 
-    public void setInvoiceId(long invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public double getTotalCost() {
-        return totalCost;
+    public Long getPaymentTotal() {
+        return paymentTotal;
     }
 
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
+    public void setPaymentTotal(Long paymentTotal) {
+        this.paymentTotal = paymentTotal;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getComments() {
+        return comments;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
-    public Date getPaidAt() {
-        return paidAt;
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setPaidAt(Date paidAt) {
-        this.paidAt = paidAt;
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
-    public String getTransactionNumber() {
-        return transactionNumber;
+    public Date getInvoiceDate() {
+        return invoiceDate;
     }
 
-    public void setTransactionNumber(String transactionNumber) {
-        this.transactionNumber = transactionNumber;
+    public void setInvoiceDate(Date invoiceDate) {
+        this.invoiceDate = invoiceDate;
     }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
 }

@@ -37,6 +37,7 @@ public class DateTimePickerActivity extends AppCompatActivity implements View.On
     final int minuto = c.get(Calendar.MINUTE);
 
     Button choose;
+    Intent pastIntent;
 
     //Widgets
     EditText etFecha;
@@ -50,6 +51,8 @@ public class DateTimePickerActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time_picker);
+
+        pastIntent = getIntent();
 
         //Widget EditText donde se mostrara la fecha obtenida
         etFecha = (EditText) findViewById(R.id.et_mostrar_fecha_picker);
@@ -73,6 +76,9 @@ public class DateTimePickerActivity extends AppCompatActivity implements View.On
                     Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
                     i.putExtra("DATE",  etFecha.getText().toString());
                     i.putExtra("TIME", etHora.getText().toString());
+                    if (pastIntent.hasExtra("SERVICE")) {
+                        i.putExtra("SERVICE", pastIntent.getIntExtra("SERVICE", 2));
+                    }
                     startActivity(i);
                 } else {
                     Toast.makeText(DateTimePickerActivity.this, "Enter date and time", Toast.LENGTH_SHORT).show();

@@ -35,8 +35,8 @@ public class CarWashingActivity extends Activity {
         int selectedId = -1;
         selectedId = m_radioGroup.getCheckedRadioButtonId();
         if(-1 != selectedId) {
-            // TODO logic of service
             Intent i = new Intent(getApplicationContext(), DateTimePickerActivity.class);
+            i.putExtra("SERVICE", 4);
             startActivity(i);
         } else {
             Toast.makeText(CarWashingActivity.this, "Seleccione tipo de vehículo", Toast.LENGTH_SHORT).show();
