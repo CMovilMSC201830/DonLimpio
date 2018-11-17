@@ -21,6 +21,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,12 +37,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import javeriana.edu.co.classes.DocumentTypes;
+import javeriana.edu.co.classes.Payload;
 import javeriana.edu.co.classes.User;
 
 public class SignupActivity extends AppCompatActivity {
@@ -50,6 +65,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mPsswd;
     private EditText mRepeatPsswd;
     private EditText mPhone;
+    private EditText mId;
     private Button mSignupBtn;
     View signupLayout;
     CircleImageView circlePhoto;
@@ -75,6 +91,7 @@ public class SignupActivity extends AppCompatActivity {
         mSignupBtn = (Button) findViewById(R.id.signup_btn);
         circlePhoto = (CircleImageView) findViewById(R.id.signup_image);
         signupLayout = findViewById(R.id.signup_layout);
+        mId = findViewById(R.id.input_id);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -208,10 +225,10 @@ public class SignupActivity extends AppCompatActivity {
             }
             case IMAGE_REQUEST: {
                 if (resultCode == RESULT_OK) {
-                    try{
+                    try {
                         imageUri = data.getData();
                         circlePhoto.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri)));
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.d(TAG, e.getMessage());
                         e.printStackTrace();
                     }
@@ -226,6 +243,7 @@ public class SignupActivity extends AppCompatActivity {
         boolean okEmail = validEmail(mEmail.getText().toString());
         boolean okPsswd = verifyPasswds(mPsswd.getText().toString(), mRepeatPsswd.getText().toString());
         boolean okPhone = verifyPhone(mPhone.getText().toString());
+        boolean okId = verifyId(mId.getText().toString());
 
         if (!okName) {
             Toast.makeText(getApplicationContext(), R.string.name_only_letters, Toast.LENGTH_SHORT)
@@ -241,10 +259,55 @@ public class SignupActivity extends AppCompatActivity {
         if (!okPhone) {
             Toast.makeText(getApplicationContext(), R.string.phone_matches, Toast.LENGTH_SHORT).show();
         }
+        if(!okId) {
+            Toast.makeText(getApplicationContext(), R.string.id_matches, Toast.LENGTH_SHORT).show();
+        }
 
-        if (okName && okLastName && okEmail && okPsswd && okPhone) {
+        if (okName && okLastName && okEmail && okPsswd && okPhone && okId) {
             addUserFirebase();
         }
+    }
+
+    private boolean verifyId(String s) {
+        if (8 == s.length()) {
+            return true;
+        }
+        return false;    }
+
+    public void addUserDONLIMPIO(String uid, String mEmail, String mName, String mLastName, String mPhone, String mId) throws JSONException {
+        User u = new User();
+        u.setFirstName(mName);
+        u.setLastName(mLastName);
+        u.setUserPhoneNumber(Long.parseLong(mPhone));
+        u.setEmail(mEmail);
+        u.setUuid(uid);
+        DocumentTypes doc = new DocumentTypes();
+        doc.setId(Long.parseLong(mId));
+        doc.setShortName("CC");
+        doc.setLongName("CEDULA DE CIUDADANIA");
+        u.setDoc(doc);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/personas/save";
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(u);
+        JSONObject obj = new JSONObject(jsonString);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,obj,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+
+                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("TAG", "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
     }
 
     private void addUserFirebase() {
@@ -264,6 +327,11 @@ public class SignupActivity extends AppCompatActivity {
                                 myRef = FirebaseDatabase.getInstance().getReference();
                                 myRef.child("Users").child(user.getUid()).setValue(new User(mEmail.getText().toString(), mName.getText().toString(),
                                         mLastName.getText().toString(), Long.parseLong(mPhone.getText().toString())));
+                                try {
+                                    addUserDONLIMPIO(user.getUid(), mEmail.getText().toString(), mName.getText().toString(), mLastName.getText().toString(), mPhone.getText().toString(), mId.getText().toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 startActivity(new Intent(SignupActivity.this, ServicesActivity.class)); //o en el listener
                                 finish();
                             }

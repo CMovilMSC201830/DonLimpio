@@ -8,10 +8,8 @@ public class User {
     String firstName;
     String lastName;
     long userPhoneNumber;
-    double userScore;
-    UserRole userRole;
-    List<Service> services;
-    List<CreditCard> creditCards;
+    String uuid;
+    DocumentTypes doc;
 
     public User() {
     }
@@ -55,35 +53,19 @@ public class User {
         this.userPhoneNumber = userPhoneNumber;
     }
 
-    public double getUserScore() {
-        return userScore;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUserScore(double userScore) {
-        this.userScore = userScore;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public DocumentTypes getDoc() {
+        return doc;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public List<Service> getServices() {
-        return services;
-    }
-
-    public void setServices(List<Service> services) {
-        this.services = services;
-    }
-
-    public List<CreditCard> getCreditCards() {
-        return creditCards;
-    }
-
-    public void setCreditCards(List<CreditCard> creditCards) {
-        this.creditCards = creditCards;
+    public void setDoc(DocumentTypes doc) {
+        this.doc = doc;
     }
 }
