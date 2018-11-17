@@ -65,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
     View profileLayout;
     String userID, photoURL;
     TextView fullname, useremail, userphone;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

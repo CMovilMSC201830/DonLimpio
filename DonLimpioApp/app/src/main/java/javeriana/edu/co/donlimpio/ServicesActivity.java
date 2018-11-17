@@ -1,6 +1,7 @@
 package javeriana.edu.co.donlimpio;
 
 import android.content.Intent;
+import android.support.v4.app.BundleCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ServicesActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     TextView mLimpieza, mPlomeria, mCarros;
     ImageButton btnProfile;
     @Override
@@ -25,7 +28,6 @@ public class ServicesActivity extends AppCompatActivity {
         mCarros = findViewById(R.id.carros_textview);
 
         mAuth = FirebaseAuth.getInstance();
-
 
         mLimpieza.setOnClickListener(new View.OnClickListener() {
             @Override

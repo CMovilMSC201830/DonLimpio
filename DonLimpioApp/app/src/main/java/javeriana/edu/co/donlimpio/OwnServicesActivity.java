@@ -8,8 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class OwnServicesActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
     Button addServicesBttn;
     String[] services;
 
