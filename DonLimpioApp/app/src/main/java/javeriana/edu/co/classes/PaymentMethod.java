@@ -1,6 +1,6 @@
 package javeriana.edu.co.classes;
 
-class PaymentMethod {
+public class PaymentMethod {
 
     private Integer id;
 

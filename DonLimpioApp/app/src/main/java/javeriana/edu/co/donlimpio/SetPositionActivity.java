@@ -93,6 +93,7 @@ public class SetPositionActivity extends FragmentActivity implements OnMapReadyC
     EditText dir;
     private String directionToPass = "";
     Button mOK;
+    int cat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,11 +170,16 @@ public class SetPositionActivity extends FragmentActivity implements OnMapReadyC
         });
 
     mOK = findViewById(R.id.btnOK);
+    cat = 2;
+    if (getIntent().hasExtra("SERVICE")) {
+        cat = getIntent().getIntExtra("SERVICE", 2);
+    }
     mOK.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
             i.putExtra("DIRECTION", directionToPass);
+            i.putExtra("SERVICE", cat);
             startActivity(i);
         }
     });

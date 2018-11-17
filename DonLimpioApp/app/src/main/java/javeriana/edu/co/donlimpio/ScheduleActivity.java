@@ -37,12 +37,14 @@ public class ScheduleActivity extends AppCompatActivity {
     FrameLayout progressBarHolder;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
+    int serviceCat;
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     String userID;
+    int cat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,9 @@ public class ScheduleActivity extends AppCompatActivity {
         Intent i = getIntent();
         if (i.hasExtra("DIRECTION")) {
             mAddress.setText(i.getStringExtra("DIRECTION"));
+        }
+        if (i.hasExtra("SERVICE")) {
+            serviceCat = i.getIntExtra("SERVICE", 2);
         }
 
         if (i.hasExtra("DATE")) {
@@ -86,13 +91,17 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("SERVICE")) {
+            cat = getIntent().getIntExtra("SERVICE", 2);
+        }
         mBtnDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new SearchingTask().execute();
-                /*Intent i = new Intent(getApplicationContext(), PaymentActivity.class);
+                Intent i = new Intent(getApplicationContext(), PaymentActivity.class);
                 i.putExtra("DIRECTION", mAddress.getText().toString());
-                startActivity(i);*/
+                i.putExtra("SERVICE", cat);
+                startActivity(i);
             }
         });
 
