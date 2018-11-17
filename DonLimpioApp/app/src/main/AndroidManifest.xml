@@ -86,7 +86,7 @@
         android:label="@string/title_activity_splash"
         android:theme="@style/FullscreenTheme"></activity>
         -->
-        <activity android:name=".FacebookActivity"></activity>
+        <activity android:name=".FacebookActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -109,7 +109,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CarWashingActivity" />
-        <activity android:name=".AddServiceActivity"></activity>
+        <activity android:name=".AddServiceActivity" />
+        <activity android:name=".SearchingActivity"></activity>
     </application>
 
 </manifest>

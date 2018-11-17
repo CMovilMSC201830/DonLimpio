@@ -2,9 +2,9 @@ package javeriana.edu.co.donlimpio;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -15,6 +15,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Calendar;
+import java.util.UUID;
 
 import javeriana.edu.co.classes.User;
 
@@ -98,10 +104,6 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new SearchingTask().execute();
-                Intent i = new Intent(getApplicationContext(), PaymentActivity.class);
-                i.putExtra("DIRECTION", mAddress.getText().toString());
-                i.putExtra("SERVICE", cat);
-                startActivity(i);
             }
         });
 
@@ -124,7 +126,7 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         };
 
-        myRef.addValueEventListener(new ValueEventListener() {
+       /* myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -141,7 +143,7 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
     public class SearchingTask extends AsyncTask<Void, Void, Void> {
@@ -167,14 +169,29 @@ public class ScheduleActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            try {
-                for (int i = 0; i < 5; i++) {
-                    Log.d("async", "Emulating some task.. Step " + i);
-                    TimeUnit.SECONDS.sleep(1);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/services/notify/request/";
+            String uuid = Calendar.getInstance().getTimeInMillis() + "";
+            String path = uuid + "/" + cat + "/" + 3;
+
+            StringRequest req = new StringRequest(Request.Method.GET, url+path,
+                    new Response.Listener() {
+                        @Override
+                        public void onResponse(Object response) {
+                            Intent i = new Intent(getApplicationContext(), SearchingActivity.class);
+                            i.putExtra("DIRECTION", mAddress.getText().toString());
+                            i.putExtra("SERVICE", cat);
+                            startActivity(i);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("SEND_REQUESTS", "Error handling rest invocation"+error.getCause());
+                        }
+                    }
+            );
+            queue.add(req);
             return null;
         }
     }
