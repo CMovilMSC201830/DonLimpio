@@ -3,6 +3,7 @@ package javeriana.edu.co.donlimpio;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,14 +11,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import javeriana.edu.co.classes.DocumentTypes;
 import javeriana.edu.co.classes.Provider;
 import javeriana.edu.co.classes.Service;
 import javeriana.edu.co.classes.User;
@@ -117,14 +127,45 @@ public class AddServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!servPrice.getText().toString().isEmpty()){
-                    providerServ.setPriceService(Double.parseDouble(servPrice.getText().toString()));
-                    mRef.child("Providers").child(user.getUid()).push().setValue(providerServ);
-                    Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
+//                    providerServ.setPriceService(Double.parseDouble(servPrice.getText().toString()));
+//                    mRef.child("Providers").child(user.getUid()).push().setValue(providerServ);
+//                    Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
                 }
                 finish();
             }
         });
 
+    }
+
+    public void addUserDONLIMPIO(String desc, String cate, Double price) throws JSONException {
+        Provider p = new Provider();
+        p.setIdCat(2);
+        p.setCategory(cate);
+        p.setDescription(desc);
+        p.setPriceService(price);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/professional/service/register";
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(p);
+        JSONObject obj = new JSONObject(jsonString);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,obj,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+
+                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("TAG", "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
     }
 
 }
