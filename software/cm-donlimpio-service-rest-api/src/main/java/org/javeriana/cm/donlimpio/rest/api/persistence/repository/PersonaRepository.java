@@ -7,16 +7,10 @@ import java.util.Optional;
 
 public interface PersonaRepository extends CrudRepository<Persona, Long> {
     @Override
-    default <S extends Persona> S save(S s) {
-        return null;
-    }
+    <S extends Persona> S save(S s);
 
     @Override
     default Optional<Persona> findById(Long aLong) {
-        return Optional.empty();
-    }
-
-    default Optional<Persona> findByUsernameAndPassword(String username, String password) {
         return Optional.empty();
     }
 

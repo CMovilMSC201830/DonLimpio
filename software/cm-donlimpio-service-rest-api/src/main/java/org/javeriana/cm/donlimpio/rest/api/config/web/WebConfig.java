@@ -5,7 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan(basePackages = {"org.javeriana.cm.donlimpio.rest.api.config.swagger",
+@ComponentScan(basePackages = {
+        "org.javeriana.cm.donlimpio.rest.api.config.swagger",
         "org.javeriana.cm.donlimpio.rest.api.config.web.adapter",
         "org.javeriana.cm.donlimpio.rest.api.config.persistence",
         "org.javeriana.cm.donlimpio.rest.api.config.util",

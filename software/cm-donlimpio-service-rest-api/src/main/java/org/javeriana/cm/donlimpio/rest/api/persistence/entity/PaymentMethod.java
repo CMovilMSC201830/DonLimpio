@@ -9,7 +9,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  *
@@ -17,16 +16,27 @@ import java.util.Collection;
  */
 @Data
 @Entity
-@Table(name = "persona_addresses")
-public class PersonaAddresses implements Serializable {
+@Table(name = "payment_methods")
+public class PaymentMethod implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @Basic(optional = false)
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "address")
-    private String address;
-    @Column(name = "persona_id")
-    private Long personaId;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "valid_thru")
+    private int validThru;
+    @Column(name = "number")
+    private String number;
+    @Column(name = "ccv")
+    private String ccv;
+    @Column(name = "card_holder")
+    private String cardHolder;
+    @Column(name = "franchise")
+    private String franchise;
+    @Column(name = "persona_doc_id")
+    private Long persona_doc_id;
 }

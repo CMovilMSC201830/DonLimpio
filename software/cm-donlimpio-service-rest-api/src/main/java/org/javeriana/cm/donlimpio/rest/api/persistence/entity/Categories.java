@@ -27,6 +27,4 @@ public class Categories implements Serializable {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "categoryId")
-    private Collection<Services> servicesCollection;
 }

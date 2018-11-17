@@ -29,6 +29,4 @@ public class DocumentTypes implements Serializable {
     private String shortName;
     @Column(name = "long_name")
     private String longName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentType")
-    private Collection<Persona> personaCollection;
 }

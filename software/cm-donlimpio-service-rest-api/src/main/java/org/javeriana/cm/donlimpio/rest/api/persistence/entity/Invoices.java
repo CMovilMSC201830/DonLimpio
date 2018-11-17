@@ -5,11 +5,13 @@
  */
 package org.javeriana.cm.donlimpio.rest.api.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -22,16 +24,19 @@ public class Invoices implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "payment_method_id")
-    private Integer paymentMethodId;
     @Column(name = "payment_total", columnDefinition = "DECIMAL")
     private Long paymentTotal;
     @Lob
     @Column(name = "comments", columnDefinition = "TEXT")
     private String comments;
-    @OneToMany(mappedBy = "invoiceId")
-    private Collection<Services> servicesCollection;
+    @JoinColumn(name = "payment_method_id", referencedColumnName = "id")
+    @ManyToOne
+    private PaymentMethod paymentMethod;
+    @Column(name = "invoice_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Date invoiceDate;
 }

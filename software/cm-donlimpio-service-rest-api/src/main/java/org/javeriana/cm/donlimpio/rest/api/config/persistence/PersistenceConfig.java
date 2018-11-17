@@ -7,11 +7,11 @@ import org.javeriana.cm.donlimpio.rest.api.config.util.ServiceProperties;
 import org.javeriana.cm.donlimpio.rest.api.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.support.SharedEntityManagerBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -21,6 +21,7 @@ import java.io.IOException;
 @Configuration
 @EnableJpaRepositories(
         basePackages = {"org.javeriana.cm.donlimpio.rest.api.persistence.repository"})
+@ComponentScan(basePackages = {"org.javeriana.cm.donlimpio.rest.api.persistence"})
 @EnableTransactionManagement
 public class PersistenceConfig {
 
@@ -53,7 +54,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public JpaTransactionManager txManager() throws IOException {
+    public JpaTransactionManager transactionManager() throws IOException {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory((EntityManagerFactory) entityManagerFactory());
         return txManager;
