@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class ServicesActivity extends AppCompatActivity {
 
@@ -21,9 +20,9 @@ public class ServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
-        mLimpieza = findViewById(R.id.limpieza);
-        mPlomeria = findViewById(R.id.plomeria);
-        mCarros = findViewById(R.id.carros);
+        mLimpieza = findViewById(R.id.limpieza_textview);
+        mPlomeria = findViewById(R.id.plomeria_textview);
+        mCarros = findViewById(R.id.carros_textview);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -70,6 +69,9 @@ public class ServicesActivity extends AppCompatActivity {
             finish();
         } else if (itemClicked == R.id.menuSettings) {
             Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(i);
+        } else if (itemClicked == R.id.menuMyServices) {
+            Intent i = new Intent(getApplicationContext(), OwnServicesActivity.class);
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);

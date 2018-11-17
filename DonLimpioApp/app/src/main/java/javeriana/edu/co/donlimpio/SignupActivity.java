@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -20,14 +18,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,20 +32,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import javeriana.edu.co.classes.DocumentTypes;
-import javeriana.edu.co.classes.Payload;
 import javeriana.edu.co.classes.User;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -68,12 +60,15 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mId;
     private Button mSignupBtn;
     View signupLayout;
-    CircleImageView circlePhoto;
-    Uri imageUri;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference myRef;
+    StorageReference mStorageRef;
+
+    CircleImageView circlePhoto;
+    Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +76,15 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         mAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        mName = (EditText) findViewById(R.id.input_firstname);
-        mLastName = (EditText) findViewById(R.id.input_lastname);
-        mPsswd = (EditText) findViewById(R.id.input_password);
-        mEmail = (EditText) findViewById(R.id.input_email);
-        mRepeatPsswd = (EditText) findViewById(R.id.input_reenter_password);
-        mPhone = (EditText) findViewById(R.id.input_phoneNumber);
-        mSignupBtn = (Button) findViewById(R.id.signup_btn);
-        circlePhoto = (CircleImageView) findViewById(R.id.signup_image);
+        mName = findViewById(R.id.input_firstname);
+        mLastName = findViewById(R.id.input_lastname);
+        mPsswd = findViewById(R.id.input_password);
+        mEmail = findViewById(R.id.input_email);
+        mRepeatPsswd = findViewById(R.id.input_reenter_password);
+        mPhone = findViewById(R.id.input_phoneNumber);
+        mSignupBtn = findViewById(R.id.signup_btn);
         signupLayout = findViewById(R.id.signup_layout);
         mId = findViewById(R.id.input_id);
 
@@ -105,37 +100,11 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Toast.makeText(getBaseContext(), "Successfully signed out.",
+                    Toast.makeText(getBaseContext(), "Ready to sign up.",
                             Toast.LENGTH_LONG).show();
                 }
             }
         };
-
-        boolean hasPermissionGallery = (ContextCompat.checkSelfPermission(getApplicationContext(),
-                android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermissionGallery)
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, IMAGE_REQUEST);
-        else {
-            circlePhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    choosePhoto();
-                }
-            });
-        }
-
-        boolean hasPermissionCamera = (ContextCompat.checkSelfPermission(getApplicationContext(),
-                android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermissionCamera) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
-        } else {
-            circlePhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    choosePhoto();
-                }
-            });
-        }
 
         mSignupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,7 +247,7 @@ public class SignupActivity extends AppCompatActivity {
         User u = new User();
         u.setFirstName(mName);
         u.setLastName(mLastName);
-        u.setUserPhoneNumber(Long.parseLong(mPhone));
+        u.setUserPhoneNumber(mPhone);
         u.setEmail(mEmail);
         u.setUuid(uid);
         DocumentTypes doc = new DocumentTypes();
@@ -326,7 +295,7 @@ public class SignupActivity extends AppCompatActivity {
                                 user.updateProfile(upcrb.build());
                                 myRef = FirebaseDatabase.getInstance().getReference();
                                 myRef.child("Users").child(user.getUid()).setValue(new User(mEmail.getText().toString(), mName.getText().toString(),
-                                        mLastName.getText().toString(), Long.parseLong(mPhone.getText().toString())));
+                                        mLastName.getText().toString(), mPhone.getText().toString()));
                                 try {
                                     addUserDONLIMPIO(user.getUid(), mEmail.getText().toString(), mName.getText().toString(), mLastName.getText().toString(), mPhone.getText().toString(), mId.getText().toString());
                                 } catch (JSONException e) {
