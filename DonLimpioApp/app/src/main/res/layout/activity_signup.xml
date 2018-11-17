@@ -9,10 +9,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".SignupActivity"
+        android:layout_height="match_parent"
+        android:layout_margin="19dp"
         android:orientation="vertical"
-        android:layout_margin="19dp">
+        tools:context=".SignupActivity">
 
         <!--<ImageButton
             android:layout_width="100dp"
@@ -24,15 +24,17 @@
             android:scaleType="fitCenter"
             android:src="@drawable/photocamera" />-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/signup_image"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:src="@drawable/photocamera" />
-
         <!--  First Name Label -->
+        <TextView
+            android:id="@+id/signup_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/maven_pro"
+            android:padding="8dp"
+            android:text="Crear Cuenta Nueva"
+            android:textSize="30sp" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
                 android:id="@+id/input_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/maven_pro"
                 android:hint="@string/name"
@@ -137,9 +140,10 @@
             android:id="@+id/signup_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:background="@color/colorPrimaryDark"
             android:fontFamily="@font/maven_pro"
+            android:padding="8dp"
             android:text="@string/doSignup"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="18sp"
