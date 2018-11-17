@@ -7,11 +7,14 @@ public class User {
     String email;
     String firstName;
     String lastName;
+    String uuid;
+    DocumentTypes doc;
     String userPhoneNumber;
     double userScore;
     UserRole userRole;
     List<Service> services;
     List<CreditCard> creditCards;
+
 
     public User() {
     }
@@ -53,6 +56,22 @@ public class User {
 
     public void setUserPhoneNumber(String userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public DocumentTypes getDoc() {
+        return doc;
+    }
+
+    public void setDoc(DocumentTypes doc) {
+        this.doc = doc;
     }
 
     public double getUserScore() {

@@ -43,6 +43,7 @@ public class DomesticConfigurationActivity extends AppCompatActivity {
     private void nextStep() {
         if (validFields()) {
             Intent i = new Intent(getApplicationContext(), DateTimePickerActivity.class);
+            i.putExtra("SERVICE", 2);
             startActivity(i);
         } else {
             Toast.makeText(DomesticConfigurationActivity.this, "Asegurese que los campos esten llenos", Toast.LENGTH_SHORT).show();

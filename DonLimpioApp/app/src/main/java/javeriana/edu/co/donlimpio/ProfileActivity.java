@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -40,7 +41,10 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,14 +81,14 @@ public class ProfileActivity extends AppCompatActivity {
         useremail = findViewById(R.id.email_TextView);
         userphone = findViewById(R.id.phone_TextView);
 
-        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://donlimpioapp.appspot.com/Users/" + userID + "/profilePhoto");
-
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        imageRef = FirebaseStorage.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference().child("Users/").child(userID);
+
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://donlimpioapp.appspot.com/");
+        imageRef = FirebaseStorage.getInstance().getReference();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -101,17 +105,15 @@ public class ProfileActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    User u = new User();
-                    u.setFirstName(ds.child(userID).getValue(User.class).getFirstName());
-                    u.setLastName(ds.child(userID).getValue(User.class).getLastName());
-                    u.setEmail(ds.child(userID).getValue(User.class).getEmail());
-                    u.setUserPhoneNumber(ds.child(userID).getValue(User.class).getUserPhoneNumber());
+                User u = new User();
+                u.setFirstName(dataSnapshot.getValue(User.class).getFirstName());
+                u.setLastName(dataSnapshot.getValue(User.class).getLastName());
+                u.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                u.setUserPhoneNumber(dataSnapshot.getValue(User.class).getUserPhoneNumber());
 
-                    fullname.setText(u.getFirstName() + " " + u.getLastName());
-                    useremail.setText(u.getEmail());
-                    userphone.setText(u.getUserPhoneNumber());
-                }
+                fullname.setText(u.getFirstName() + " " + u.getLastName());
+                useremail.setText(u.getEmail());
+                userphone.setText(u.getUserPhoneNumber());
             }
 
             @Override
@@ -120,11 +122,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        photoURL = mStorageRef.child("Users/").child(userID).child("profilePhoto").getDownloadUrl().toString();
-        mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        mStorageRef.child("Users/").child(userID).child("/profilePhoto").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(photoURL).into(circlePhoto);
+                //Picasso.get().load(photoURL).into(circlePhoto);
+                photoURL = uri.toString();
+                RetrievePhotoImage photoImageTask = new RetrievePhotoImage();
+                photoImageTask.execute();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -132,6 +136,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
 
         ownS = (Button) findViewById(R.id.own_services);
@@ -171,6 +177,8 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         }
+
+
     }
 
     @Override
@@ -303,6 +311,33 @@ public class ProfileActivity extends AppCompatActivity {
             cursor.moveToFirst();
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
+        }
+    }
+
+    class RetrievePhotoImage extends AsyncTask<String, Void, Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            Bitmap bmp = null;
+            try {
+                URL url = new URL(photoURL);
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (MalformedURLException e) {
+                Log.w(TAG, "Profile photo url malformed.");
+            } catch (IOException e) {
+                Log.w(TAG, "Profile photo couldn't be found.");
+            }
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bmp) {
+            super.onPostExecute(bmp);
+            if(bmp == null){
+                Toast.makeText(getBaseContext(), "Couldn't load profile image.", Toast.LENGTH_SHORT).show();
+            } else {
+                circlePhoto.setImageBitmap(bmp);
+            }
         }
     }
 }

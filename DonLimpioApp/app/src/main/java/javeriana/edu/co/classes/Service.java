@@ -4,112 +4,79 @@ import java.util.Date;
 
 public class Service {
 
-    int idService;
-    String nombreServicio;
-    String descripcionServicio;
-    Date createdAt;
-    Date startDate;
-    Date dueDate;
-    int hourDuration;
-    double precioServicio;
-    ServiceLocation serviceLocation;
-    ServiceType serviceType;
-    Invoice serviceInvoice;
+    private long id;
+    private String professional;
+    private Category category;
+    private Invoice invoice;
+    private User persona;
+    private PersonaAddresses personaAddress;
+    private Date reservationDate;
+    private int status;
 
     public Service() {
     }
 
-    public Service(String nombreServicio, String descripcionServicio, double precioServicio) {
-        this.nombreServicio = nombreServicio;
-        this.descripcionServicio = descripcionServicio;
-        this.precioServicio = precioServicio;
+    public long getId() {
+        return id;
     }
 
-    public int getIdService() {
-        return idService;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setIdService(int idService) {
-        this.idService = idService;
+    public String getProfessional() {
+        return professional;
     }
 
-    public String getNombreServicio() {
-        return nombreServicio;
+    public void setProfessional(String professional) {
+        this.professional = professional;
     }
 
-    public void setNombreServicio(String nombreServicio) {
-        this.nombreServicio = nombreServicio;
+    public Category getCategory() {
+        return category;
     }
 
-    public String getDescripcionServicio() {
-        return descripcionServicio;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public void setDescripcionServicio(String descripcionServicio) {
-        this.descripcionServicio = descripcionServicio;
+    public Invoice getInvoice() {
+        return invoice;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public User getPersona() {
+        return persona;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public void setPersona(User persona) {
+        this.persona = persona;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public PersonaAddresses getPersonaAddress() {
+        return personaAddress;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public void setPersonaAddress(PersonaAddresses personaAddress) {
+        this.personaAddress = personaAddress;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public Date getReservationDate() {
+        return reservationDate;
     }
 
-    public int getHourDuration() {
-        return hourDuration;
+    public void setReservationDate(Date reservationDate) {
+        this.reservationDate = reservationDate;
     }
 
-    public void setHourDuration(int hourDuration) {
-        this.hourDuration = hourDuration;
+    public int getStatus() {
+        return status;
     }
 
-    public double getPrecioServicio() {
-        return precioServicio;
-    }
-
-    public void setPrecioServicio(double precioServicio) {
-        this.precioServicio = precioServicio;
-    }
-
-    public ServiceLocation getServiceLocation() {
-        return serviceLocation;
-    }
-
-    public void setServiceLocation(ServiceLocation serviceLocation) {
-        this.serviceLocation = serviceLocation;
-    }
-
-    public ServiceType getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(ServiceType serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public Invoice getServiceInvoice() {
-        return serviceInvoice;
-    }
-
-    public void setServiceInvoice(Invoice serviceInvoice) {
-        this.serviceInvoice = serviceInvoice;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
