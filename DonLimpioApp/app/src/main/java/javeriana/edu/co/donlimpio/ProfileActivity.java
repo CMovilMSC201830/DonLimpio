@@ -110,7 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     fullname.setText(u.getFirstName() + " " + u.getLastName());
                     useremail.setText(u.getEmail());
-                    userphone.setText(Long.toString(u.getUserPhoneNumber()));
+                    userphone.setText(u.getUserPhoneNumber());
                 }
             }
 

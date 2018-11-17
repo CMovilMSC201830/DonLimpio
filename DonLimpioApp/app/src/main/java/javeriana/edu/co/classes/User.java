@@ -7,7 +7,7 @@ public class User {
     String email;
     String firstName;
     String lastName;
-    long userPhoneNumber;
+    String userPhoneNumber;
     double userScore;
     UserRole userRole;
     List<Service> services;
@@ -16,7 +16,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, long userPhoneNumber) {
+    public User(String email, String firstName, String lastName, String userPhoneNumber) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,11 +47,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public long getUserPhoneNumber() {
+    public String getUserPhoneNumber() {
         return userPhoneNumber;
     }
 
-    public void setUserPhoneNumber(long userPhoneNumber) {
+    public void setUserPhoneNumber(String userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
     }
 
