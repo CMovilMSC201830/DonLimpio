@@ -1,5 +1,6 @@
 package org.javeriana.cm.donlimpio.rest.api.persistence.repository;
 
+import org.javeriana.cm.donlimpio.rest.api.exception.PersonaEntityNotFoundException;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.Services;
 import org.springframework.data.repository.CrudRepository;
 
@@ -22,6 +23,10 @@ public interface ServicesRepository extends CrudRepository<Services, Integer> {
     }
 
     List<Services> findAllByPersona(long personaId);
+
+    List<Services> findAllByUUID(String uuid);
+
+    Services saveWithUUID(Services services) throws PersonaEntityNotFoundException;
 
     int updateStatusById(int serviceId, int status);
 }

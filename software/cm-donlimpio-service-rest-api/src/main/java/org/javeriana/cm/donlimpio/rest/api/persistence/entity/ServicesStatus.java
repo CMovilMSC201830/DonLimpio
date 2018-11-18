@@ -7,30 +7,25 @@ package org.javeriana.cm.donlimpio.rest.api.persistence.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
- *
  * @author mpedrozoduran
  */
 @Data
 @Entity
-@Table(name = "persona_addresses")
-public class PersonaAddresses implements Serializable {
+@Table(name = "services_status")
+public class ServicesStatus implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "address")
-    private String address;
-    @Column(name = "persona_id")
-    private Long personaId;
-    @Column(name = "latitude")
-    private Double lat;
-    @Column(name = "longitude")
-    private Double lng;
+    @Column(name = "type")
+    private String type;
+
 }

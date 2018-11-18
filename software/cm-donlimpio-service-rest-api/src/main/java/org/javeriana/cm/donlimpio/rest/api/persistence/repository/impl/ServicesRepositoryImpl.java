@@ -1,5 +1,6 @@
 package org.javeriana.cm.donlimpio.rest.api.persistence.repository.impl;
 
+import org.javeriana.cm.donlimpio.rest.api.exception.PersonaEntityNotFoundException;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.PaymentMethod;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.Persona;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.Services;
@@ -22,7 +23,20 @@ public class ServicesRepositoryImpl implements ServicesRepository {
 
     @Override
     public <S extends Services> S save(S s) {
-        Persona persona = em.merge(s.getPersona());
+        return em.merge(s);
+    }
+
+    @Override
+    public Services saveWithUUID(Services s) throws PersonaEntityNotFoundException {
+        Query query = em.createQuery("SELECT p FROM Persona p WHERE uuid = :uuid");
+        query.setParameter("uuid", s.getPersona().getUuid());
+        List<Persona> listPersonas = query.getResultList();
+        Persona persona = (listPersonas != null && !listPersonas.isEmpty()) ? listPersonas.get(0) : null;
+        if (persona == null) {
+            throw new PersonaEntityNotFoundException("Persona not found by UUID");
+        }
+        s.setPersona(persona);
+        em.merge(s.getPersona());
         s.getPersonaAddress().setPersonaId(persona.getId());
         em.merge(s.getPersonaAddress());
         s.getInvoice().getPaymentMethod().setPersona_doc_id(persona.getId());
@@ -78,6 +92,14 @@ public class ServicesRepositoryImpl implements ServicesRepository {
         String str = "SELECT s FROM Services s WHERE s.persona.id = :personaId";
         Query query = em.createQuery(str);
         query.setParameter("personaId", personaId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Services> findAllByUUID(String uuid) {
+        String str = "SELECT s FROM Services s WHERE s.persona.uuid = :uuid";
+        Query query = em.createQuery(str);
+        query.setParameter("uuid", uuid);
         return query.getResultList();
     }
 

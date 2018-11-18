@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "services")
+@Table(name = "ordered_services")
 public class Services implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,5 +46,4 @@ public class Services implements Serializable {
     private Date reservationDate;
     @Column(name = "status")
     private Integer status;
-
 }

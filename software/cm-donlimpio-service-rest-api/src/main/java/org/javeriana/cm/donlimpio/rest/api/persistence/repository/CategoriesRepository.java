@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface CategoriesRepository extends CrudRepository<Categories, Integer> {
     @Override
-    default <S extends Categories> S save(S s) {
-        return null;
-    }
+    <S extends Categories> S save(S s);
 
     @Override
     Optional<Categories> findById(Integer id);

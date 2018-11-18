@@ -25,8 +25,8 @@ public class DocumentTypes implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "short_name")
+    @Column(name = "short_name", insertable = false)
     private String shortName;
-    @Column(name = "long_name")
+    @Column(name = "long_name", insertable = false)
     private String longName;
 }

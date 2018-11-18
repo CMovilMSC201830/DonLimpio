@@ -17,30 +17,22 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "persona")
-public class Persona implements Serializable {
+@Table(name = "persona_location")
+public class PersonaLocation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "firstName")
-    private String firstName;
-    @Column(name = "lastName")
-    private String lastName;
-    @Column(name = "userPhoneNumber")
-    private Long userPhoneNumber;
-    @Column(name = "email")
-    private String email;
+    @Column(name = "latitude")
+    private Double latitude;
+    @Column(name = "longitude")
+    private Double longitude;
     @Column(name = "create_time", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date createTime;
-    @JoinColumn(name = "document_type", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private DocumentTypes documentTypes;
     @Column(name = "uuid", columnDefinition = "TEXT")
     private String uuid;
-
 }
