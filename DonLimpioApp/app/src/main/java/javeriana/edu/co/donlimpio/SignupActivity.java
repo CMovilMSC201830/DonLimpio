@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -18,12 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,17 +29,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.gson.Gson;
-import de.hdodenhof.circleimageview.CircleImageView;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import javeriana.edu.co.classes.DocumentTypes;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import javeriana.edu.co.classes.User;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -57,18 +50,14 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mPsswd;
     private EditText mRepeatPsswd;
     private EditText mPhone;
-    private EditText mId;
     private Button mSignupBtn;
     View signupLayout;
+    CircleImageView circlePhoto;
+    Uri imageUri;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference myRef;
-    StorageReference mStorageRef;
-
-    CircleImageView circlePhoto;
-    Uri imageUri;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,17 +65,16 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         mAuth = FirebaseAuth.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        mName = findViewById(R.id.input_firstname);
-        mLastName = findViewById(R.id.input_lastname);
-        mPsswd = findViewById(R.id.input_password);
-        mEmail = findViewById(R.id.input_email);
-        mRepeatPsswd = findViewById(R.id.input_reenter_password);
-        mPhone = findViewById(R.id.input_phoneNumber);
-        mSignupBtn = findViewById(R.id.signup_btn);
+        mName = (EditText) findViewById(R.id.input_firstname);
+        mLastName = (EditText) findViewById(R.id.input_lastname);
+        mPsswd = (EditText) findViewById(R.id.input_password);
+        mEmail = (EditText) findViewById(R.id.input_email);
+        mRepeatPsswd = (EditText) findViewById(R.id.input_reenter_password);
+        mPhone = (EditText) findViewById(R.id.input_phoneNumber);
+        mSignupBtn = (Button) findViewById(R.id.signup_btn);
+        circlePhoto = (CircleImageView) findViewById(R.id.signup_image);
         signupLayout = findViewById(R.id.signup_layout);
-        mId = findViewById(R.id.input_id);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -100,11 +88,37 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Toast.makeText(getBaseContext(), "Ready to sign up.",
+                    Toast.makeText(getBaseContext(), "Successfully signed out.",
                             Toast.LENGTH_LONG).show();
                 }
             }
         };
+
+        boolean hasPermissionGallery = (ContextCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermissionGallery)
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, IMAGE_REQUEST);
+        else {
+            circlePhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    choosePhoto();
+                }
+            });
+        }
+
+        boolean hasPermissionCamera = (ContextCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermissionCamera) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
+        } else {
+            circlePhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    choosePhoto();
+                }
+            });
+        }
 
         mSignupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,10 +208,10 @@ public class SignupActivity extends AppCompatActivity {
             }
             case IMAGE_REQUEST: {
                 if (resultCode == RESULT_OK) {
-                    try {
+                    try{
                         imageUri = data.getData();
                         circlePhoto.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri)));
-                    } catch (Exception e) {
+                    }catch (Exception e){
                         Log.d(TAG, e.getMessage());
                         e.printStackTrace();
                     }
@@ -212,7 +226,6 @@ public class SignupActivity extends AppCompatActivity {
         boolean okEmail = validEmail(mEmail.getText().toString());
         boolean okPsswd = verifyPasswds(mPsswd.getText().toString(), mRepeatPsswd.getText().toString());
         boolean okPhone = verifyPhone(mPhone.getText().toString());
-        boolean okId = verifyId(mId.getText().toString());
 
         if (!okName) {
             Toast.makeText(getApplicationContext(), R.string.name_only_letters, Toast.LENGTH_SHORT)
@@ -228,55 +241,10 @@ public class SignupActivity extends AppCompatActivity {
         if (!okPhone) {
             Toast.makeText(getApplicationContext(), R.string.phone_matches, Toast.LENGTH_SHORT).show();
         }
-        if(!okId) {
-            Toast.makeText(getApplicationContext(), R.string.id_matches, Toast.LENGTH_SHORT).show();
-        }
 
-        if (okName && okLastName && okEmail && okPsswd && okPhone && okId) {
+        if (okName && okLastName && okEmail && okPsswd && okPhone) {
             addUserFirebase();
         }
-    }
-
-    private boolean verifyId(String s) {
-        if (8 == s.length()) {
-            return true;
-        }
-        return false;    }
-
-    public void addUserDONLIMPIO(String uid, String mEmail, String mName, String mLastName, String mPhone, String mId) throws JSONException {
-        User u = new User();
-        u.setFirstName(mName);
-        u.setLastName(mLastName);
-        u.setUserPhoneNumber(mPhone);
-        u.setEmail(mEmail);
-        u.setUuid(uid);
-        DocumentTypes doc = new DocumentTypes();
-        doc.setId(Long.parseLong(mId));
-        doc.setShortName("CC");
-        doc.setLongName("CEDULA DE CIUDADANIA");
-        u.setDoc(doc);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/personas/save";
-
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(u);
-        JSONObject obj = new JSONObject(jsonString);
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,obj,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("TAG", "Error handling rest invocation" + error.getCause());
-                    }
-                }
-        );
-        queue.add(req);
     }
 
     private void addUserFirebase() {
@@ -296,11 +264,6 @@ public class SignupActivity extends AppCompatActivity {
                                 myRef = FirebaseDatabase.getInstance().getReference();
                                 myRef.child("Users").child(user.getUid()).setValue(new User(mEmail.getText().toString(), mName.getText().toString(),
                                         mLastName.getText().toString(), mPhone.getText().toString()));
-                                try {
-                                    addUserDONLIMPIO(user.getUid(), mEmail.getText().toString(), mName.getText().toString(), mLastName.getText().toString(), mPhone.getText().toString(), mId.getText().toString());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
                                 startActivity(new Intent(SignupActivity.this, ServicesActivity.class)); //o en el listener
                                 finish();
                             }

@@ -1,113 +1,70 @@
 <resources>
-    <string name="app_name">Don Limpio</string>
+  <string name="app_name">Don Limpio</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Contraseña</string>
-    <string name="prompt_repeat_password">Repita la contraseña</string>
-    <string name="prompt_phone">Teléfono</string>
-    <string name="action_sign_in">Ingresar</string>
-    <string name="action_sign_in_short">Ingresar</string>
-    <string name="error_invalid_email">La dirección de correo no es válida.</string>
-    <string name="error_invalid_password">La contraseña es muy corta.</string>
-    <string name="error_incorrect_password">La contraseña es incorrecta.</string>
-    <string name="error_field_required">Campo requerido</string>
-    <string name="permission_rationale">"Permiso de contacto es necesario para sugerencias."</string>
-    <string name="o">O</string>
-    <string name="register">REGISTRATE</string>
-    <string name="login_facebook_button">Ingresar con facebook</string>
-    <string name="login_google_button">Ingresar con Google</string>
-    <string name="name">Nombre</string>
-    <string name="lastName">Apellido</string>
-    <string name="doSignup">Registrarse</string>
-    <string name="no_repeat_psswd">La contraseña debe ser igual en ambos campos</string>
-    <string name="name_only_letters">El nombre debe tener solo letras (Pepito-Pepa-Pepa), entre 4 y 10 caracteres</string>
-    <string name="lastname_only_letters">El Apellido debe tener solo letras, entre 4 y 10 caracteres</string>
-    <string name="no_empty">Los campos no pueden estár vacios</string>
-    <string name="phone_matches">Teléfono debe tener 10 dígitos</string>
-    <string name="id_matches">Cédula debe tener 8 dígitos</string>
-    <string name="title_activity_location_map">Localización</string>
-    <string name="address">Dirección</string>
-    <string name="menulogout">Cerrar sesion</string>
-    <string name="menuConfiguracion">Configuracion</string>
-    <string name="menuMisServicios">Mis Servicios</string>
-    <string name="auth_failed">Autorización fallida</string>
-    <string name="dom_conf">Configuración Limpieza Doméstica</string>
-    <string name="promp_combo_building_type">Seleccione Uno</string>
-    <string name="build_desc">Descripción vivienda:</string>
-    <string name="ironing_service">Servicio de planchado</string>
-    <string name="washing_service">Servicio de lavado Automático/Manual</string>
-    <string name="outside_washing">Lavado de terrazas</string>
-    <string name="lbl_choose_add_services">Seleccione los servicios a tomar</string>
-    <string name="meters_lbl_advice">Cuantos metros tiene el lugar de Limpieza en total, si no lo sabe coloque un valor aproximado:</string>
-    <string name="next">Siguiente</string>
-    <string name="here_goes_address">Digite su dirección</string>
-    <string name="title_activity_set_position">Map</string>
-    <string name="title_activity_tracking_service">Map</string>
-    <string name="home">home</string>
+  <!-- Strings related to login -->
+  <string name="prompt_email">Email</string>
+  <string name="prompt_password">Contraseña</string>
+  <string name="prompt_repeat_password">Repita la contraseña</string>
+  <string name="prompt_phone">Teléfono</string>
+  <string name="action_sign_in">Ingresar</string>
+  <string name="action_sign_in_short">Ingresar</string>
+  <string name="error_invalid_email">La dirección de correo no es válida.</string>
+  <string name="error_invalid_password">La contraseña es muy corta.</string>
+  <string name="error_incorrect_password">La contraseña es incorrecta.</string>
+  <string name="error_field_required">Campo requerido</string>
+  <string name="permission_rationale">"Permiso de contacto es necesario para sugerencias."</string>
+  <string name="o">O</string>
+  <string name="register">REGISTRATE</string>
+  <string name="login_facebook_button">Ingresar con facebook</string>
+  <string name="login_google_button">Ingresar con Google</string>
+  <string name="name">Nombre</string>
+  <string name="lastName">Apellido</string>
+  <string name="doSignup">Registrarse</string>
+  <string name="no_repeat_psswd">La contraseña debe ser igual en ambos campos</string>
+  <string name="name_only_letters">El nombre debe tener solo letras (Pepito-Pepa-Pepa), entre 4 y 10 caracteres</string>
+  <string name="lastname_only_letters">El Apellido debe tener solo letras, entre 4 y 10 caracteres</string>
+  <string name="no_empty">Los campos no pueden estár vacios</string>
+  <string name="phone_matches">Teléfono debe tener 10 dígitos</string>
+  <string name="title_activity_location_map">Localización</string>
+  <string name="address">Dirección</string>
+  <string name="menulogout">Cerrar sesion</string>
+  <string name="menuConfiguracion">Configuracion</string>
+  <string name="auth_failed">Autorización fallida</string>
+  <string name="dom_conf">Configuración Limpieza Doméstica</string>
+  <string name="promp_combo_building_type">Seleccione Uno</string>
+  <string name="build_desc">Descripción vivienda:</string>
+  <string name="ironing_service">Servicio de planchado</string>
+  <string name="washing_service">Servicio de lavado Automático/Manual</string>
+  <string name="outside_washing">Lavado de terrazas</string>
+  <string name="lbl_choose_add_services">Seleccione los servicios a tomar</string>
+  <string name="meters_lbl_advice">Cuantos metros tiene el lugar de Limpieza en total, si no lo sabe coloque un valor aproximado:</string>
+  <string name="next">Siguiente</string>
+  <string name="here_goes_address">Digite su dirección</string>
+  <string-array name="building_types">
+    <item>Toda la casa</item>
+    <item>1 - 3 Baños</item>
+    <item>3 o más Baños</item>
+    <item>1 o 2 Habitaciones</item>
+    <item>3 o más habitaciones</item>
+    <item>1 Baño - 1 habitación - Sala;Comedor;Cocina</item>
+    <item>3 Baños - 3 habitaciónes - Sala;Comedor;Cocina</item>
+    <item>2 Baños - 2 Habitaciones - Sala;Comedor;Cocina</item>
+  </string-array>
+  <string name="title_activity_set_position">Map</string>
+  <string name="title_activity_tracking_service">Map</string>
+  <string name="home">home</string>
 
-    <!-- String arrays -->
-    <string-array name="building_types">
-        <item>Toda la casa</item>
-        <item>1 - 3 Baños</item>
-        <item>3 o más Baños</item>
-        <item>1 o 2 Habitaciones</item>
-        <item>3 o más habitaciones</item>
-        <item>1 Baño - 1 habitación - Sala;Comedor;Cocina</item>
-        <item>3 Baños - 3 habitaciónes - Sala;Comedor;Cocina</item>
-        <item>2 Baños - 2 Habitaciones - Sala;Comedor;Cocina</item>
-    </string-array>
-
-    <string-array name="services_cats">
-        <item>Construccion</item>
-        <item>Plomeria</item>
-        <item>Carpinteria</item>
-        <item>Electricidad</item>
-        <item>Limpieza</item>
-        <item>Automoviles</item>
-    </string-array>
-    <string-array name="subcat_construccion">
-        <item>Construccion casas</item>
-        <item>Construccion oficinas</item>
-        <item>Construccion locales</item>
-        <item>Remodelaciones</item>
-    </string-array>
-    <string-array name="subcat_plomeria">
-        <item>Tubos y drenajes</item>
-        <item>Reparaciones banos y cocinas</item>
-        <item>Griferias / Valvulas</item>
-        <item>Tanques / Calentadores</item>
-    </string-array>
-    <string-array name="subcat_carpinteria">
-        <item>Diseno y ensamble muebles</item>
-        <item>Reparacion muebles</item>
-    </string-array>
-    <string-array name="subcat_electricidad">
-        <item>Servicio electrico</item>
-        <item>Sistemas de seguridad</item>
-        <item>Calentadores electricos</item>
-    </string-array>
-    <string-array name="subcat_limpieza">
-        <item>Limpieza domestica</item>
-        <item>Limpieza comercial</item>
-    </string-array>
-    <string-array name="subcat_autos">
-        <item>Lavado autos</item>
-        <item>Reparaciones mecanicas</item>
-        <item>Rines y Llantas</item>
-    </string-array>
-
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="user_name_example">Ada Lovelace</string>
-    <string name="user_email_example">email@example.com</string>
-    <string name="user_phone_example">300-321-1234</string>
-    <string name="mis_servicios_buttonText">Mis Servicios</string>
+  <string name="title_activity_splash">SplashActivity</string>
+  <string name="dummy_button">Dummy Button</string>
+  <string name="dummy_content">DUMMY\nCONTENT</string>
+  <string name="user_name_example">Ada Lovelace</string>
+  <string name="user_email_example">email@example.com</string>
+  <string name="user_phone_example">300-321-1234</string>
+  <string name="mis_servicios_buttonText">Mis Servicios</string>
 
 
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
+  <string name="title_activity_scrolling">ScrollingActivity</string>
+  <string name="large_text">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -196,21 +153,14 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="dinning_stay">Sala/Comedor</string>
-    <string name="kitchen">Cocina</string>
-    <string name="inMeters">En metros</string>
-    <string name="title_activity_car_washing">CarWashingActivity</string>
-    <string name="conf_carWash">Configuración Limpieza Auto</string>
+  <string name="dinning_stay">Sala/Comedor</string>
+  <string name="kitchen">Cocina</string>
+  <string name="inMeters">En metros</string>
+  <string name="title_activity_car_washing">CarWashingActivity</string>
+  <string name="conf_carWash">Configuración Limpieza Auto</string>
 
-    <string name="facebook_app_id">191479331755441</string>
-    <string name="fb_login_protocol_scheme">fb191479331755441</string>
-    <string name="cedula">Cédula</string>
-    <string name="agendar_buscar">Agendar / Buscar</string>
+  <string name="facebook_app_id">191479331755441</string>
+  <string name="fb_login_protocol_scheme">fb191479331755441</string>
 
-    <string name="mis_servicios_text">Mis Servicios</string>
-    <string name="servicios_title_text">Servicios</string>
-    <string name="donlimpio_text">DonLimpio</string>
-    <string name="android_maiden_text">de Android Maiden</string>
-
-    <string name="google_login_app_id">166926263135-h7h1igbhj29on4glnm5hipeth8rnkgu0.apps.googleusercontent.com</string>
+  <string name="google_login_app_id">166926263135-h7h1igbhj29on4glnm5hipeth8rnkgu0.apps.googleusercontent.com</string>
 </resources>
