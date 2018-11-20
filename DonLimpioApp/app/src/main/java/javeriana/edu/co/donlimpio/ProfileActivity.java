@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -35,12 +36,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     CircleImageView circlePhoto;
-    //ImageButton circlePhoto;
     Uri imageUri, downloadPhoto;
     InputStream imageStream;
     UploadTask uploadTask;
@@ -76,20 +78,18 @@ public class ProfileActivity extends AppCompatActivity {
         useremail = findViewById(R.id.email_TextView);
         userphone = findViewById(R.id.phone_TextView);
 
-        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://donlimpioapp.appspot.com/Users/" + userID + "/profilePhoto");
-
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        imageRef = FirebaseStorage.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
+        myRef = FirebaseDatabase.getInstance().getReference().child("Users/").child(userID);
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://donlimpio-95d3b.appspot.com/");
+        imageRef = FirebaseStorage.getInstance().getReference();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
+                if (user != null) {
                     Toast.makeText(getBaseContext(), "Successfully signed with " + user.getEmail(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getBaseContext(), "User has signed out", Toast.LENGTH_SHORT).show();
@@ -100,17 +100,15 @@ public class ProfileActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    User u = new User();
-                    u.setFirstName(ds.child(userID).getValue(User.class).getFirstName());
-                    u.setLastName(ds.child(userID).getValue(User.class).getLastName());
-                    u.setEmail(ds.child(userID).getValue(User.class).getEmail());
-                    u.setUserPhoneNumber(ds.child(userID).getValue(User.class).getUserPhoneNumber());
+                User u = new User();
+                u.setFirstName(dataSnapshot.getValue(User.class).getFirstName());
+                u.setLastName(dataSnapshot.getValue(User.class).getLastName());
+                u.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                u.setUserPhoneNumber(dataSnapshot.getValue(User.class).getUserPhoneNumber());
 
-                    fullname.setText(u.getFirstName() + " " + u.getLastName());
-                    useremail.setText(u.getEmail());
-                    userphone.setText(u.getUserPhoneNumber());
-                }
+                fullname.setText(u.getFirstName() + " " + u.getLastName());
+                useremail.setText(u.getEmail());
+                userphone.setText(u.getUserPhoneNumber());
             }
 
             @Override
@@ -119,28 +117,27 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        photoURL = mStorageRef.child("Users/").child(userID).child("profilePhoto").getDownloadUrl().toString();
-        mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        mStorageRef.child("Users/").child(userID).child("profilePhoto").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(photoURL).into(circlePhoto);
+                photoURL = uri.toString();
+                RetrievePhotoImage photoImageTask = new RetrievePhotoImage();
+                photoImageTask.execute();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getBaseContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-
         ownS = (Button) findViewById(R.id.own_services);
         circlePhoto = (CircleImageView) findViewById(R.id.profile_image);
-        //circlePhoto = (ImageButton) findViewById(R.id.profile_image);
 
         ownS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),OwnServicesActivity.class);
+                Intent i = new Intent(getApplicationContext(), OwnServicesActivity.class);
                 startActivity(i);
             }
         });
@@ -148,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity {
         boolean hasPermissionGallery = (ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         if (!hasPermissionGallery)
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},IMAGE_REQUEST);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, IMAGE_REQUEST);
         else {
             circlePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,7 +158,7 @@ public class ProfileActivity extends AppCompatActivity {
         boolean hasPermissionCamera = (ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
         if (!hasPermissionCamera) {
-            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.CAMERA},CAMERA_REQUEST);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
         } else {
             circlePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -250,11 +247,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
             case IMAGE_REQUEST: {
                 if (resultCode == RESULT_OK) {
-                    try{
+                    try {
                         imageUri = data.getData();
                         circlePhoto.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri)));
                         uploadFireBase();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.d(TAG, e.getMessage());
                         e.printStackTrace();
                     }
@@ -263,9 +260,9 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadFireBase(){
+    private void uploadFireBase() {
 
-        if (imageUri != null){
+        if (imageUri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
@@ -281,27 +278,43 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
-                    Toast.makeText(getBaseContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                             .getTotalByteCount());
-                    progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
                 }
             });
         }
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
-        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) {
-            return contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            return cursor.getString(idx);
+    class RetrievePhotoImage extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            Bitmap bmp = null;
+            try {
+                URL url = new URL(photoURL);
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (MalformedURLException e) {
+                Log.w(TAG, "Profile photo url malformed.");
+            } catch (IOException e) {
+                Log.w(TAG, "Profile photo couldn't be found.");
+            }
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bmp) {
+            super.onPostExecute(bmp);
+            if (bmp == null) {
+                Toast.makeText(getBaseContext(), "Couldn't load profile image.", Toast.LENGTH_SHORT).show();
+            } else {
+                circlePhoto.setImageBitmap(bmp);
+            }
         }
     }
 }

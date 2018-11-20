@@ -42,8 +42,6 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG_SIGNIN = "EMAIL_SIGNIN";
     private static final String TAG = "AddToDatabase";
     private static final String TAG_PROFILE = "CreateProfile";
-    public static final int IMAGE_REQUEST = 100;
-    public static final int CAMERA_REQUEST = 20;
     private EditText mName;
     private EditText mLastName;
     private EditText mEmail;
@@ -52,8 +50,6 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mPhone;
     private Button mSignupBtn;
     View signupLayout;
-    CircleImageView circlePhoto;
-    Uri imageUri;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
