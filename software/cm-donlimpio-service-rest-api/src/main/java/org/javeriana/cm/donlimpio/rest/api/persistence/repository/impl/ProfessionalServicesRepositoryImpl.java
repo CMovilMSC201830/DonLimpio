@@ -45,9 +45,9 @@ public class ProfessionalServicesRepositoryImpl implements ProfessionalServicesR
 
     @Override
     public List<ProfessionalServices> findAllByCategoryId(int categoryId) {
-        String str = "SELECT ps " +
-                     "FROM ProfessionalServices ps " +
-                     "WHERE categoryId = :categoryId";
+        String str = "SELECT ps, p " +
+                     "FROM ProfessionalServices ps, Persona p " +
+                     "WHERE ps.categoryId = :categoryId AND ps.personaId = p.id";
         Query query = em.createQuery(str);
         query.setParameter("categoryId", categoryId);
         return query.getResultList();

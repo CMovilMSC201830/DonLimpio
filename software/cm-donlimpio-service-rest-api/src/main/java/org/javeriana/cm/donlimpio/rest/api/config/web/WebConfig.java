@@ -23,10 +23,10 @@ import java.io.InputStream;
 public class WebConfig {
     @Bean
     public FirebaseApp initFirebaseSDK() throws IOException {
-        InputStream serviceAccount = WebConfig.class.getResourceAsStream("/donlimpioapp-firebase-adminsdk-svzr2-83c8b202ac.json");
+        InputStream serviceAccount = WebConfig.class.getResourceAsStream("/donlimpio-95d3b-firebase-adminsdk-fqaln-5bb220e2d0.json");
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://donlimpioapp.firebaseio.com/")
+                .setDatabaseUrl("https://donlimpio-95d3b.firebaseio.com/")
                 .build();
         return FirebaseApp.initializeApp(options);
     }

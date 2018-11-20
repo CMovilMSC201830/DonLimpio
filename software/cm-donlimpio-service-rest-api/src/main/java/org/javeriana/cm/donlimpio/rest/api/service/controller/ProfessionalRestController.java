@@ -2,6 +2,7 @@ package org.javeriana.cm.donlimpio.rest.api.service.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.javeriana.cm.donlimpio.rest.api.persistence.controller.ProfessionalController;
+import org.javeriana.cm.donlimpio.rest.api.persistence.entity.PersonaProfessionalServices;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.ProfessionalServices;
 import org.javeriana.cm.donlimpio.rest.api.service.model.HttpRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,11 @@ public class ProfessionalRestController extends AbstractController {
     @RequestMapping(value = "/service/search/{uuid}", method = RequestMethod.GET)
     public List<ProfessionalServices> searchProfessionalServicesByUUID(@PathVariable String uuid) {
         return professionalController.findByUUID(uuid);
+    }
+
+    @ApiOperation("Returns the professional's offered service by category")
+    @RequestMapping(value = "/service/search/bycategory/{categoryId}", method = RequestMethod.GET)
+    public List<PersonaProfessionalServices> searchProfessionalServicesByCategoryId(@PathVariable int categoryId) {
+        return professionalController.findByCategoryId(categoryId);
     }
 }
