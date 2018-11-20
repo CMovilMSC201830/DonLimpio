@@ -92,7 +92,7 @@ public class ServicesActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                for (final DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     RequestUser pxc = singleSnapshot.getValue(RequestUser.class);
 
                     if (pxc.getUuidUser().equals(userID)) {
@@ -111,6 +111,9 @@ public class ServicesActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         myRef.child("Services_Request").child(rqstuuid).child("serviceStatus").setValue(1);
+                                        myRef = FirebaseDatabase.getInstance().getReference();
+                                        myRef = database.getReference("/ProvidersRequests");
+                                        myRef.child(singleSnapshot.getKey()).child("active").setValue(0);
                                     }
                                 });
                         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
