@@ -47,15 +47,21 @@ public class SearchingActivity extends AppCompatActivity {
 
         myRef = database.getReference("/Services_Request");
 
-        myRef. addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     ServiceRequest rqst = singleSnapshot.getValue(ServiceRequest.class);
-                    Log.i("SEARCHING SERVICE", "Encontró SERVICIO: " + rqst.getCategoryId());
+                    // Log.i("SEARCHING SERVICE", "Encontró SERVICIO: " + (Long.parseLong(singleSnapshot.getKey()) + "-" + Long.parseLong(uuid)) + " equal: " + (Long.parseLong(singleSnapshot.getKey())==Long.parseLong(uuid) ));
 
-                    if (1 == rqst.getServiceStatus()) {
+                    if ((Long.parseLong(singleSnapshot.getKey())==Long.parseLong(uuid))
+                            && rqst.getServiceStatus() == 1) {
                         Toast.makeText(SearchingActivity.this, rqst.toString(), Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(), PaymentActivity.class);
+                        i.putExtra("DIRECTION", dir);
+                        i.putExtra("SERVICE", cat);
+                        i.putExtra("REQUEST", uuid);
+                        startActivity(i);
                     }
 
                 }

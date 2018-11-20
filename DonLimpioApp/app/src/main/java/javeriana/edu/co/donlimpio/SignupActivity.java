@@ -251,12 +251,12 @@ public class SignupActivity extends AppCompatActivity {
         u.setEmail(mEmail);
         u.setUuid(uid);
         DocumentTypes doc = new DocumentTypes();
-        doc.setId(Long.parseLong(mId));
+        doc.setId(Long.parseLong("1"));
         doc.setShortName("CC");
         doc.setLongName("CEDULA DE CIUDADANIA");
         u.setDoc(doc);
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/personas/save";
+        String url = "http://ec2-34-205-134-66.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/personas/save";
 
         Gson gson = new Gson();
         String jsonString = gson.toJson(u);

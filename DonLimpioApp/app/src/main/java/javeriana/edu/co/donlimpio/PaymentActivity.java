@@ -116,7 +116,7 @@ public class PaymentActivity extends AppCompatActivity {
         public void onClick (View view){
 
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/services/register";
+        String url = "http://ec2-34-205-134-66.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/services/register";
 
         Service s = new Service();
         s.setProfessional("profesional id");
