@@ -1,6 +1,5 @@
 package javeriana.edu.co.donlimpio;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,26 +10,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javeriana.edu.co.classes.DocumentTypes;
 import javeriana.edu.co.classes.Provider;
-import javeriana.edu.co.classes.Service;
-import javeriana.edu.co.classes.User;
 
 public class AddServiceActivity extends AppCompatActivity {
 
@@ -67,36 +63,42 @@ public class AddServiceActivity extends AppCompatActivity {
                         subcategoria.setAdapter(new ArrayAdapter<String>(AddServiceActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,
                                 getResources().getStringArray(R.array.subcat_construccion)));
+                        providerServ.setCategoryId(1);
                         break;
 
                     case "Plomeria":
                         subcategoria.setAdapter(new ArrayAdapter<String>(AddServiceActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,
                                 getResources().getStringArray(R.array.subcat_plomeria)));
+                        providerServ.setCategoryId(2);
                         break;
 
                     case "Carpinteria":
                         subcategoria.setAdapter(new ArrayAdapter<String>(AddServiceActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,
                                 getResources().getStringArray(R.array.subcat_carpinteria)));
+                        providerServ.setCategoryId(3);
                         break;
 
                     case "Electricidad":
                         subcategoria.setAdapter(new ArrayAdapter<String>(AddServiceActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,
                                 getResources().getStringArray(R.array.subcat_electricidad)));
+                        providerServ.setCategoryId(4);
                         break;
 
                     case "Limpieza":
                         subcategoria.setAdapter(new ArrayAdapter<String>(AddServiceActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,
                                 getResources().getStringArray(R.array.subcat_limpieza)));
+                        providerServ.setCategoryId(5);
                         break;
 
                     case "Automoviles":
                         subcategoria.setAdapter(new ArrayAdapter<String>(AddServiceActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,
                                 getResources().getStringArray(R.array.subcat_autos)));
+                        providerServ.setCategoryId(6);
                         break;
                 }
             }
@@ -127,9 +129,9 @@ public class AddServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!servPrice.getText().toString().isEmpty()){
-//                    providerServ.setPriceService(Double.parseDouble(servPrice.getText().toString()));
-//                    mRef.child("Providers").child(user.getUid()).push().setValue(providerServ);
-//                    Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
+                    providerServ.setPrice(Double.parseDouble(servPrice.getText().toString()));
+                    mRef.child("Providers").child(user.getUid()).push().setValue(providerServ);
+                    Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
                 }
                 finish();
             }
@@ -137,15 +139,11 @@ public class AddServiceActivity extends AppCompatActivity {
 
     }
 
-    public void addUserDONLIMPIO(String desc, String cate, Double price) throws JSONException {
-        Provider p = new Provider();
-        p.setIdCat(2);
-        p.setCategory(cate);
-        p.setDescription(desc);
-        p.setPriceService(price);
+    public void addUserDONLIMPIO(Provider p) throws JSONException {
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/professional/service/register";
+        // local url -> String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/professional/service/register";
+        String url = "http://ec2-100-24-124-229.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/professional/service/register";
 
         Gson gson = new Gson();
         String jsonString = gson.toJson(p);

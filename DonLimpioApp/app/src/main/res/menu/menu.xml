@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
       android:id="@+id/menuMyServices"
-      android:title="@string/menuMisServicios" />
+      android:title="Mis Servicios" />
   <item
       android:id="@+id/menuSettings"
       android:title="@string/menuConfiguracion" />

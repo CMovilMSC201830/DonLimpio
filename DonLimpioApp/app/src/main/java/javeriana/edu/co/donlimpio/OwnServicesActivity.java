@@ -20,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import javeriana.edu.co.classes.Provider;
+import javeriana.edu.co.util.CustomAdapter;
+
 public class OwnServicesActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -30,8 +33,8 @@ public class OwnServicesActivity extends AppCompatActivity {
     ListView listView;
     String userID;
 
-    ArrayList<String> arrayList = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    ArrayList<Provider> arrayList = new ArrayList<>();
+    static CustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,52 +47,28 @@ public class OwnServicesActivity extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference().child("Providers/").child(userID);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,arrayList);
-
-        listView = (ListView) findViewById(R.id.serviceslist_dynamic);
+        listView = findViewById(R.id.serviceslist_dynamic);
 
         addServicesBttn = findViewById(R.id.add_services_button);
 
         addServicesBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(),AddServiceActivity.class);
+                Intent i = new Intent(getBaseContext(), AddServiceActivity.class);
                 startActivity(i);
             }
         });
 
+        adapter = new CustomAdapter(arrayList,getApplicationContext());
+
         listView.setAdapter(adapter);
 
-        mRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String string = dataSnapshot.getValue(String.class);
-                arrayList.add(string);
-                adapter.notifyDataSetChanged();
-            }
+        //TODO: inflate list view
+        /*
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = "http://ec2-100-24-124-229.compute-1.amazonaws.com:909/cm-donlimpio-service-rest-api/professional/services/request/";
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String string = dataSnapshot.getValue(String.class);
-                arrayList.add(string);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+         */
 
     }
 

@@ -47,7 +47,7 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:fontFamily="@font/lobster"
-          android:text="@string/donlimpio_text"
+          android:text="DonLimpio"
           android:textAlignment="center"
           android:textColor="@color/common_google_signin_btn_text_dark_focused"
           android:textSize="48sp" />
@@ -59,7 +59,7 @@
           android:layout_marginBottom="8dp"
           android:layout_weight="1"
           android:fontFamily="@font/maven_pro"
-          android:text="@string/android_maiden_text"
+          android:text="de Android Maiden"
           android:textAlignment="center"
           android:textSize="10sp" />
 

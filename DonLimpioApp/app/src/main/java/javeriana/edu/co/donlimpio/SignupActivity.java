@@ -73,7 +73,6 @@ public class SignupActivity extends AppCompatActivity {
         mRepeatPsswd = (EditText) findViewById(R.id.input_reenter_password);
         mPhone = (EditText) findViewById(R.id.input_phoneNumber);
         mSignupBtn = (Button) findViewById(R.id.signup_btn);
-        circlePhoto = (CircleImageView) findViewById(R.id.signup_image);
         signupLayout = findViewById(R.id.signup_layout);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -88,37 +87,11 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Toast.makeText(getBaseContext(), "Successfully signed out.",
+                    Toast.makeText(getBaseContext(), "Crea una cuenta nueva",
                             Toast.LENGTH_LONG).show();
                 }
             }
         };
-
-        boolean hasPermissionGallery = (ContextCompat.checkSelfPermission(getApplicationContext(),
-                android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermissionGallery)
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, IMAGE_REQUEST);
-        else {
-            circlePhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    choosePhoto();
-                }
-            });
-        }
-
-        boolean hasPermissionCamera = (ContextCompat.checkSelfPermission(getApplicationContext(),
-                android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermissionCamera) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
-        } else {
-            circlePhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    choosePhoto();
-                }
-            });
-        }
 
         mSignupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,82 +114,6 @@ public class SignupActivity extends AppCompatActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case IMAGE_REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Snackbar.make(signupLayout, "¡Permiso concedido!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    Snackbar.make(signupLayout, "¡La aplicación no puede usar la galeria!",
-                            Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                }
-            }
-            case CAMERA_REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Snackbar.make(signupLayout, "¡Permiso concedido!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    Snackbar.make(signupLayout, "¡La aplicación no puede usar la cámara!",
-                            Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                }
-            }
-        }
-    }
-
-    private void choosePhoto() {
-        final CharSequence[] options = {"Camara", "Galeria", "Cancelar"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-        builder.setTitle("Cambiar Foto");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (options[i].equals("Camara")) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "fotoPerfil.jpg");
-                    imageUri = Uri.fromFile(f);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(intent, CAMERA_REQUEST);
-                } else if (options[i].equals("Galeria")) {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, IMAGE_REQUEST);
-                } else if (options[i].equals("Cancelar")) {
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case CAMERA_REQUEST: {
-                if (resultCode == RESULT_OK) {
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    BitmapFactory.decodeFile(imageUri.getPath()).compress(Bitmap.CompressFormat.JPEG, 80, bytes);
-                    circlePhoto.setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray())));
-                }
-            }
-            case IMAGE_REQUEST: {
-                if (resultCode == RESULT_OK) {
-                    try{
-                        imageUri = data.getData();
-                        circlePhoto.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri)));
-                    }catch (Exception e){
-                        Log.d(TAG, e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-            }
         }
     }
 

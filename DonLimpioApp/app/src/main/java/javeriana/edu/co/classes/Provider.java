@@ -2,20 +2,20 @@ package javeriana.edu.co.classes;
 
 public class Provider {
 
-    private int idCat;
+    private int categoryId;
     private String category;
     private String description;
-    private double priceService;
+    private double price;
 
     public Provider() {
     }
 
-    public int getIdCat() {
-        return idCat;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setIdCat(int idCat) {
-        this.idCat = idCat;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategory() {
@@ -34,11 +34,11 @@ public class Provider {
         this.description = description;
     }
 
-    public double getPriceService() {
-        return priceService;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPriceService(double priceService) {
-        this.priceService = priceService;
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

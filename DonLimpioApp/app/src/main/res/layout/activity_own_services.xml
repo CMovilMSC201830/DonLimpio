@@ -15,7 +15,7 @@
         android:layout_margin="8dp"
         android:fontFamily="@font/maven_pro"
         android:padding="8dp"
-        android:text="@string/mis_servicios_text"
+        android:text="Mis Servicios"
         android:textSize="30sp" />
 
     <ScrollView
