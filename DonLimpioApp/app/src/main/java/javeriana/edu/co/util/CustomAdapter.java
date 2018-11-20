@@ -1,5 +1,6 @@
 package javeriana.edu.co.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,54 +16,47 @@ import java.util.ArrayList;
 import javeriana.edu.co.classes.Provider;
 import javeriana.edu.co.donlimpio.R;
 
-public class CustomAdapter extends ArrayAdapter<Provider> {
+public class CustomAdapter extends BaseAdapter {
 
     ArrayList<Provider> arrayList;
-    Context mContext;
-    int lastPosition = -1;
+    Activity mContext;
+    static LayoutInflater inflater = null;
 
-    private static class ViewHolder{
-        TextView categText;
-        TextView descrText;
-        TextView priceText;
-    }
-
-    public CustomAdapter(ArrayList<Provider> info, Context context){
-        super(context, R.layout.provider_row_item, info);
+    public CustomAdapter(ArrayList<Provider> info, Activity context){
+        //super(context, R.layout.provider_row_item, info);
         this.arrayList = info;
         this.mContext = context;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Provider p = getItem(position);
-        ViewHolder viewHolder;
-        final View result;
+        View itemView = convertView;
+        itemView = (itemView == null) ? inflater.inflate(R.layout.provider_row_item,null) : itemView;
+        TextView categText = itemView.findViewById(R.id.category_textview);
+        TextView descrText = itemView.findViewById(R.id.description_textview);
+        TextView priceText = itemView.findViewById(R.id.price_textview);
+        Provider p = arrayList.get(position);
+        categText.setText(p.getCategory());
+        descrText.setText(p.getDescription());
+        priceText.setText(Integer.toString(p.getPrice()));
 
-        if (convertView == null){
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.provider_row_item, parent, false);
-            viewHolder.categText = (TextView) convertView.findViewById(R.id.category_textview);
-            viewHolder.descrText = (TextView) convertView.findViewById(R.id.description_textview);
-            viewHolder.priceText = (TextView) convertView.findViewById(R.id.price_textview);
+        return itemView;
+    }
 
-            result = convertView;
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
-        }
+    @Override
+    public int getCount() {
+        return arrayList.size();
+    }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-        result.startAnimation(animation);
-        lastPosition = position;
+    @Override
+    public Object getItem(int position) {
+        return arrayList.get(position);
+    }
 
-        viewHolder.categText.setText(p.getCategory());
-        viewHolder.descrText.setText(p.getDescription());
-        viewHolder.priceText.setText(Double.toString(p.getPrice()));
-
-        return convertView;
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

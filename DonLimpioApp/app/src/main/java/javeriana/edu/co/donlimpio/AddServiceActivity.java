@@ -129,9 +129,15 @@ public class AddServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!servPrice.getText().toString().isEmpty()){
-                    providerServ.setPrice(Double.parseDouble(servPrice.getText().toString()));
+                    providerServ.setPrice(Integer.parseInt(servPrice.getText().toString()));
                     mRef.child("Providers").child(user.getUid()).push().setValue(providerServ);
-                    Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
+                    try {
+                        addUserDONLIMPIO(providerServ);
+                        Toast.makeText(getBaseContext(),"Servicio creado exitosamente",Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
                 finish();
             }
@@ -143,15 +149,15 @@ public class AddServiceActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         // local url -> String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/professional/service/register";
-        String url = "http://ec2-100-24-124-229.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/professional/service/register";
+        String url = "http://ec2-34-205-134-66.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/professional/service/register";
 
         Gson gson = new Gson();
         String jsonString = gson.toJson(p);
         JSONObject obj = new JSONObject(jsonString);
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,obj,
-                new Response.Listener() {
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(Object response) {
+                    public void onResponse(JSONObject response) {
 
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
                     }

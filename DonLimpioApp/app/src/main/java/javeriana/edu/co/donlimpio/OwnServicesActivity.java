@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class OwnServicesActivity extends AppCompatActivity {
     String userID;
 
     ArrayList<Provider> arrayList = new ArrayList<>();
-    static CustomAdapter adapter;
+    CustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class OwnServicesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_own_services);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser();
         userID = user.getUid();
 
         mRef = FirebaseDatabase.getInstance().getReference().child("Providers/").child(userID);
@@ -59,9 +60,26 @@ public class OwnServicesActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new CustomAdapter(arrayList,getApplicationContext());
+        adapter = new CustomAdapter(arrayList, this);
 
-        listView.setAdapter(adapter);
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    Provider p = ds.getValue(Provider.class);
+                    arrayList.add(p);
+                }
+                adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         //TODO: inflate list view
         /*

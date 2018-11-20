@@ -5,9 +5,15 @@ public class Provider {
     private int categoryId;
     private String category;
     private String description;
-    private double price;
+    private int price;
 
     public Provider() {
+    }
+
+    public Provider(String category, String description, int price) {
+        this.category = category;
+        this.description = description;
+        this.price = price;
     }
 
     public int getCategoryId() {
@@ -34,11 +40,11 @@ public class Provider {
         this.description = description;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }
