@@ -26,6 +26,9 @@ public class PersonaController {
     private PersonaRepository personaRepository;
 
     @Autowired
+    private PersonaRepository personaRepositoryImpl;
+
+    @Autowired
     private PersonaAddressRepository personaAddressRepository;
 
     @Autowired
@@ -43,6 +46,10 @@ public class PersonaController {
 
     public Optional<DocumentTypes> findDocumentTypesById(int documentType) {
         return documentTypesRepository.findById(documentType);
+    }
+
+    public List<Persona> findByUUID(String uuid) {
+        return personaRepositoryImpl.findByUUID(uuid);
     }
 
     public Persona savePersona(Persona persona) {

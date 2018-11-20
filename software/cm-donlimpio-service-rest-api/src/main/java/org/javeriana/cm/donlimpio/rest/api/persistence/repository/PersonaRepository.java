@@ -3,6 +3,7 @@ package org.javeriana.cm.donlimpio.rest.api.persistence.repository;
 import org.javeriana.cm.donlimpio.rest.api.persistence.entity.Persona;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PersonaRepository extends CrudRepository<Persona, Long> {
@@ -13,6 +14,8 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
     default Optional<Persona> findById(Long aLong) {
         return Optional.empty();
     }
+
+    List<Persona> findByUUID(String uuid);
 
     @Override
     default boolean existsById(Long aLong) {

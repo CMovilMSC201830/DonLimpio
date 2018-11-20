@@ -81,4 +81,10 @@ public class PersonasRestController extends AbstractController {
         }
         return httpRestResponse;
     }
+
+    @ApiOperation("Returns a Persona by UUID")
+    @RequestMapping(value = "/search/byuuid/{uuid}", method = RequestMethod.GET)
+    public List<Persona> searchPersonaByUUID(@PathVariable String uuid) {
+        return personaController.findByUUID(uuid);
+    }
 }
