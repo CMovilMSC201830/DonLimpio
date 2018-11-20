@@ -21,19 +21,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/provider"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="0.7"
+        android:fontFamily="@font/maven_pro"
+        android:text="Proveedor: "
+        android:textSize="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invoice" />
+
     <LinearLayout
         android:id="@+id/servicePrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/invoice"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/invoice">
+        app:layout_constraintTop_toBottomOf="@+id/provider">
 
         <TextView
             android:id="@+id/price"
@@ -83,7 +98,7 @@
             android:layout_weight="0.3"
             android:focusable="false"
             android:fontFamily="@font/maven_pro"
-            android:text="$ 456" />
+            android:text="$ 3000" />
     </LinearLayout>
 
     <LinearLayout
@@ -106,7 +121,7 @@
             android:layout_height="30dp"
             android:layout_weight="0.7"
             android:fontFamily="@font/maven_pro"
-            android:text="Otros Gastos:"
+            android:text="DonLimpio:"
             android:textSize="23dp" />
 
         <EditText
@@ -116,7 +131,7 @@
             android:layout_weight="0.3"
             android:focusable="false"
             android:fontFamily="@font/maven_pro"
-            android:text="$ 789" />
+            android:text="$ 2000" />
     </LinearLayout>
 
     <LinearLayout

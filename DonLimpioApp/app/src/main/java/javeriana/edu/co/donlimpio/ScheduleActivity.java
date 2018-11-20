@@ -28,10 +28,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import javeriana.edu.co.classes.Provider;
+import javeriana.edu.co.classes.ProviderXCategory;
+import javeriana.edu.co.classes.RequestUser;
+import javeriana.edu.co.classes.ServiceRequest;
 import javeriana.edu.co.classes.User;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -51,6 +60,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     String userID;
     int cat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +128,7 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
+                if (user != null) {
                     Toast.makeText(getBaseContext(), "Successfully signed with " + user.getEmail(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getBaseContext(), "User has signed out", Toast.LENGTH_SHORT).show();
@@ -149,6 +159,7 @@ public class ScheduleActivity extends AppCompatActivity {
     public class SearchingTask extends AsyncTask<Void, Void, Void> {
 
         String uuidClass;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -169,18 +180,52 @@ public class ScheduleActivity extends AppCompatActivity {
             mBtnDo.setEnabled(true);
         }
 
+        public void inviteProviders(final String uuidRqst) {
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = "http://ec2-100-24-124-229.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/professional/service/search/bycategory/";
+            String path = cat + "";
+
+            StringRequest req = new StringRequest(Request.Method.GET, url + path,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("SEND REQUESTS", "response :" + response);
+                            Gson gson = new Gson();
+                            ProviderXCategory[] listCat = gson.fromJson(response, ProviderXCategory[].class);
+                            mFirebaseDatabase = FirebaseDatabase.getInstance();
+                            Log.i("RESPONSE_LENGTH", listCat.length + "");
+                            myRef = FirebaseDatabase.getInstance().getReference();
+                            for (ProviderXCategory pxc : listCat) {
+
+                                myRef.child("ProvidersRequests").child(Calendar.getInstance().getTimeInMillis() + "")
+                                        .setValue(new RequestUser(pxc.getUuidUser(),
+                                        1, uuidRqst, Calendar.getInstance().getTime(), pxc.getPrice()));
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("SEND_REQUESTS", "Error handling rest invocation" + error.getCause());
+                        }
+                    }
+            );
+            queue.add(req);
+        }
+
         @Override
         protected Void doInBackground(Void... params) {
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-            String url = "http://192.168.0.23:9090/cm-donlimpio-service-rest-api/services/notify/request/";
+            String url = "http://ec2-100-24-124-229.compute-1.amazonaws.com:9090/cm-donlimpio-service-rest-api/services/notify/request/";
             String uuid = Calendar.getInstance().getTimeInMillis() + "";
             uuidClass = uuid;
             String path = uuid + "/" + cat + "/" + 3;
 
-            StringRequest req = new StringRequest(Request.Method.GET, url+path,
+            StringRequest req = new StringRequest(Request.Method.GET, url + path,
                     new Response.Listener() {
                         @Override
                         public void onResponse(Object response) {
+                            inviteProviders(uuidClass);
                             Intent i = new Intent(getApplicationContext(), SearchingActivity.class);
                             i.putExtra("DIRECTION", mAddress.getText().toString());
                             i.putExtra("SERVICE", cat);
@@ -191,7 +236,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.i("SEND_REQUESTS", "Error handling rest invocation"+error.getCause());
+                            Log.i("SEND_REQUESTS", "Error handling rest invocation" + error.getCause());
                         }
                     }
             );
